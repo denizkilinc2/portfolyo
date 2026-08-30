@@ -1,26 +1,512 @@
 @import "tailwindcss";
 
+/* ============================================
+   1. KOYU TEMA (varsayılan)
+   ============================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  /* Zeminler */
+  --ink: #0b0b0f;
+  --ink-soft: #121219;
+  --ink-card: #16161f;
+
+  /* Çizgiler */
+  --line: #24242f;
+  --line-strong: #34343f;
+
+  /* Metin */
+  --cream: #f2f2f5;
+  --muted: #9a9aa8;
+
+  /* Vurgu rengi */
+  --accent: #f4b740;
+  --accent-soft: #ffce6b;
+
+  /* Minyatür CV sayfasının kâğıt renkleri */
+  --paper: #ebe6dc;
+  --paper-line: #b4ada0;
+  --paper-strong: #4d4842;
+  --paper-shadow: rgba(0, 0, 0, 0.5);
+
+  /* Katman ayarları */
+  --grain-opacity: 0.04;
+  --glow-opacity: 0.14;
 }
 
+/* ============================================
+   2. AÇIK TEMA
+   ============================================ */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --ink: #faf8f5;
+  --ink-soft: #f3efe8;
+  --ink-card: #ebe5db;
+
+  --line: #ded6c9;
+  --line-strong: #c5baa9;
+
+  --cream: #191713;
+  --muted: #6b6357;
+
+  --accent: #a35d00;
+  --accent-soft: #8a4e00;
+
+  --paper: #ffffff;
+  --paper-line: #cdc4b4;
+  --paper-strong: #575044;
+  --paper-shadow: rgba(90, 78, 58, 0.25);
+
+  --grain-opacity: 0.03;
+  --glow-opacity: 0.2;
+}
+
+/* ============================================
+   3. TAILWIND TEMASI
+   ============================================ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-card: var(--ink-card);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-cream: var(--cream);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-instrument);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================
+   4. TEMEL AYARLAR
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--line) var(--ink);
+  scrollbar-width: thin;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--ink);
+  color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.45s ease, color 0.45s ease;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ============================================
+   5. SCROLLBAR (Chrome / Edge)
+   ============================================ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--line-strong);
+}
+
+/* ============================================
+   6. GRAIN DOKUSU
+   ============================================ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  transition: opacity 0.45s ease;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================
+   7. YARDIMCI SINIFLAR
+   ============================================ */
+.eyebrow {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hairline {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--line) 15%,
+    var(--line) 85%,
+    transparent
+  );
+}
+
+.glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: var(--glow-opacity);
+  background: var(--accent);
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 80%);
+}
+
+.dot {
+  position: relative;
+  display: inline-block;
+  height: 7px;
+  width: 7px;
+  border-radius: 9999px;
+  background: var(--accent);
+  flex: none;
+}
+
+.dot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--accent);
+  animation: ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ============================================
+   8. ANİMASYONLAR
+   ============================================ */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.rise {
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.d-1 { animation-delay: 0.08s; }
+.d-2 { animation-delay: 0.18s; }
+.d-3 { animation-delay: 0.28s; }
+.d-4 { animation-delay: 0.38s; }
+.d-5 { animation-delay: 0.48s; }
+.d-6 { animation-delay: 0.6s; }
+
+/* ============================================
+   9. ÖZEL İMLEÇ
+   ============================================ */
+@media (hover: hover) and (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+
+  input,
+  textarea,
+  select {
+    cursor: auto !important;
+  }
+}
+
+/* ============================================
+   10. EKRAN OKUYUCU METNİ
+   ============================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================
+   11. MİNYATÜR CV SAYFASI
+   Gerçek bir kağıt gibi dalgalanır.
+   ============================================ */
+.sayfa {
+  display: inline-flex;
+  transform-origin: 15% 50%;
+  filter: drop-shadow(0 3px 5px var(--paper-shadow));
+  animation: sayfa-dalga 6s ease-in-out infinite;
+  transition: filter 0.4s ease;
+}
+
+@keyframes sayfa-dalga {
+  0%,
+  100% {
+    transform: perspective(140px) rotateY(0deg) rotate(0deg) translateY(0);
+  }
+  28% {
+    transform: perspective(140px) rotateY(-19deg) rotate(-2deg) translateY(-1px);
+  }
+  62% {
+    transform: perspective(140px) rotateY(12deg) rotate(1.5deg) translateY(0.5px);
+  }
+}
+
+/* Üstüne gelince: hızlanır, yükselir, gölge derinleşir */
+.cv-grup:hover .sayfa {
+  animation-duration: 2s;
+  filter: drop-shadow(0 6px 10px var(--paper-shadow));
+}
+
+/* Tıklandığında sayfa aşağı süzülüp kaybolur */
+@keyframes sayfa-in {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(18px) rotate(-8deg) scale(0.78);
+    opacity: 0;
+  }
+}
+
+.sayfa-iniyor {
+  animation: sayfa-in 0.45s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+}
+
+/* Okun yukarıdan düşüp yerine oturması */
+@keyframes ok-dus {
+  0% {
+    transform: translateY(-7px);
+    opacity: 0;
+  }
+  55% {
+    transform: translateY(2.5px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cv-grup:hover .cv-ok {
+  animation: ok-dus 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Butonun üstünden geçen parıltı */
+@keyframes parilti {
+  from {
+    transform: translateX(-140%) skewX(-20deg);
+  }
+  to {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+
+.cv-grup:hover .cv-parilti {
+  animation: parilti 0.9s ease-out;
+}
+
+/* Tik işaretinin çizilerek belirmesi */
+@keyframes tik-ciz {
+  from {
+    stroke-dashoffset: 16;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.cv-tik {
+  stroke-dasharray: 16;
+  animation: tik-ciz 0.4s ease-out forwards;
+}
+
+/* ============================================
+   12. ANİMASYON AZALTMA TERCİHİ
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   13. DEV MONOGRAM
+   Hero'nun sağında duran "DK" harfleri.
+   Üç katman: sabit kontur + gezen akım + çarpma.
+   ============================================ */
+.monogram {
+  position: absolute;
+  right: 8%;
+  top: 50%;
+  display: grid;
+  transform: translateY(-50%);
+  pointer-events: none;
+  user-select: none;
+  line-height: 0.82;
+  font-family: var(--font-instrument), serif;
+  font-size: clamp(11rem, 18vw, 23rem);
+  letter-spacing: -0.05em;
+}
+
+.monogram > span {
+  grid-area: 1 / 1;
+  color: transparent;
+  white-space: nowrap;
+}
+
+/* --- Katman 1: sabit kontur --- */
+.monogram-taban {
+  -webkit-text-stroke: 2.5px var(--muted);
+  opacity: 0.26;
+  animation: monogram-titre 9s linear infinite;
+}
+
+/* --- Katman 2: harflerin içinden gezen akım ---
+   Maske hareket ettikçe akım harf konturunda ilerliyor. */
+.monogram-akim {
+  -webkit-text-stroke: 2.5px var(--accent);
+  filter: drop-shadow(0 0 16px var(--accent));
+  mask-image: linear-gradient(
+    118deg,
+    transparent 41%,
+    #000 47%,
+    #000 53%,
+    transparent 59%
+  );
+  -webkit-mask-image: linear-gradient(
+    118deg,
+    transparent 41%,
+    #000 47%,
+    #000 53%,
+    transparent 59%
+  );
+  mask-size: 320% 320%;
+  -webkit-mask-size: 320% 320%;
+  animation: monogram-akim 4s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+
+@keyframes monogram-akim {
+  0% {
+    mask-position: 130% 0%;
+    -webkit-mask-position: 130% 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.95;
+  }
+  52% {
+    opacity: 0.95;
+  }
+  68% {
+    mask-position: -70% 100%;
+    -webkit-mask-position: -70% 100%;
+    opacity: 0;
+  }
+  100% {
+    mask-position: -70% 100%;
+    -webkit-mask-position: -70% 100%;
+    opacity: 0;
+  }
+}
+
+/* --- Katman 3: çarpma ---
+   Akım harflerin ortasına vardığında tüm kontur
+   bir anda parlayıp sönerek dağılıyor. */
+.monogram-carpma {
+  -webkit-text-stroke: 2.5px var(--accent);
+  filter: drop-shadow(0 0 26px var(--accent));
+  opacity: 0;
+  animation: monogram-carpma 4s ease-out infinite;
+}
+
+@keyframes monogram-carpma {
+  0%,
+  29% {
+    opacity: 0;
+  }
+  31% {
+    opacity: 0.55;
+  }
+  36% {
+    opacity: 0.2;
+  }
+  46% {
+    opacity: 0.06;
+  }
+  60%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Konturda çok seyrek, çok hafif bir dalgalanma */
+@keyframes monogram-titre {
+  0%,
+  93%,
+  100% {
+    opacity: 0.26;
+  }
+  95% {
+    opacity: 0.38;
+  }
+  97% {
+    opacity: 0.22;
+  }
 }
