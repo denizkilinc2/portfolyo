@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { diller, dilBilgi, dilMi, type Dil } from "@/i18n/config";
 import "../globals.css";
 
@@ -134,6 +135,7 @@ export default async function LocaleLayout({
       </head>
       <body className="min-h-dvh bg-ink font-sans text-cream antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
