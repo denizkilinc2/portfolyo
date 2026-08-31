@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { diller, dilBilgi, type Dil } from "@/i18n/config";
 
 type Props = {
@@ -69,12 +70,12 @@ export default function LangSwitcher({ dil, etiket }: Props) {
         {diller.map((d) => {
           const secili = d === dil;
           return (
-            <a key={d} href={yeniYol(d)} onClick={() => setAcik(false)} className={`flex items-center justify-between px-4 py-2.5 text-sm transition-colors duration-200 ${secili ? "bg-ink-card text-accent" : "text-muted hover:bg-ink-card hover:text-cream"}`} hrefLang={d}>
+            <Link key={d} href={yeniYol(d)} onClick={() => setAcik(false)} className={`flex items-center justify-between px-4 py-2.5 text-sm transition-colors duration-200 ${secili ? "bg-ink-card text-accent" : "text-muted hover:bg-ink-card hover:text-cream"}`} hrefLang={d}>
               {dilBilgi[d].ad}
               <span className="font-mono text-[0.6rem] uppercase tracking-wider opacity-60">
                 {dilBilgi[d].kisa}
               </span>
-            </a>
+            </Link>
           );
         })}
       </div>

@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 type Tema = "dark" | "light";
 
 export default function ThemeToggle() {
-  const [tema, setTema] = useState<Tema>("dark");
+  const [tema, setTema] = useState<Tema>("light");
   /* Sunucuda hangi temanın seçili olduğunu bilemeyiz.
      Tarayıcıda okuyana kadar simgeyi soluk gösteriyoruz. */
   const [hazir, setHazir] = useState(false);
 
   useEffect(() => {
-    const mevcut = (document.documentElement.dataset.theme as Tema) ?? "dark";
+    const mevcut = (document.documentElement.dataset.theme as Tema) ?? "light";
     setTema(mevcut);
     setHazir(true);
   }, []);

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { diller, dilBilgi, dilMi, type Dil } from "@/i18n/config";
@@ -104,14 +105,15 @@ export async function generateMetadata({
 }
 
 /* Sayfa çizilmeden ÖNCE çalışır. Kayıtlı tema tercihini
-   uygular, böylece açılışta yanlış tema bir an görünmez. */
+   uygular, böylece açılışta yanlış tema bir an görünmez.
+   Varsayılan: aydınlık. */
 const temaBetigi = `
 (function(){
   try {
     var t = localStorage.getItem('tema');
-    document.documentElement.dataset.theme = (t === 'light' || t === 'dark') ? t : 'dark';
+    document.documentElement.dataset.theme = (t === 'light' || t === 'dark') ? t : 'light';
   } catch (e) {
-    document.documentElement.dataset.theme = 'dark';
+    document.documentElement.dataset.theme = 'light';
   }
 })();
 `;
@@ -126,14 +128,16 @@ export default async function LocaleLayout({
   return (
     <html
       lang={dilBilgi[locale].htmlLang}
-      data-theme="dark"
+      data-theme="light"
       suppressHydrationWarning
       className={`${inter.variable} ${instrument.variable} ${jetbrains.variable}`}
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: temaBetigi }} />
-      </head>
       <body className="min-h-dvh bg-ink font-sans text-cream antialiased">
+        {/* Sayfa çizilmeden önce çalışır; <Link> geçişlerinde
+            yeniden çalıştırılmaz, tema korunur. */}
+        <Script id="tema" strategy="beforeInteractive">
+          {temaBetigi}
+        </Script>
         {children}
         <Analytics />
       </body>

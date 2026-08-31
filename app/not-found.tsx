@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import Magnetic from "@/components/Magnetic";
 import { varsayilanDil } from "@/i18n/config";
@@ -55,9 +56,9 @@ export default function NotFound() {
 
             <div className="mt-10 flex justify-center">
               <Magnetic>
-                <a href={`/${dil}`} className="flex h-13 items-center rounded-full bg-accent px-8 font-medium text-ink transition-all duration-300 hover:bg-accent-soft hover:shadow-[0_0_40px_-8px_var(--accent)]">
+                <Link href={`/${dil}`} className="flex h-13 items-center rounded-full bg-accent px-8 font-medium text-ink transition-all duration-300 hover:bg-accent-soft hover:shadow-[0_0_40px_-8px_var(--accent)]">
                   {s.hata404.buton}
-                </a>
+                </Link>
               </Magnetic>
             </div>
           </div>

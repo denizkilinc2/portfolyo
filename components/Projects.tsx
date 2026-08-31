@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import Reveal from "./Reveal";
 import Scramble from "./Scramble";
 import { projects, kategoriler, type Kategori } from "@/data/projects";
@@ -196,7 +197,7 @@ export default function Projects({ dil, s }: Props) {
                 </div>
 
                 {/* Tüm satırı kaplayan görünmez bağlantı — rozetlerin altında kalır */}
-                <a href={`/${dil}/projeler/${p.slug}`} className="absolute inset-0 z-10" aria-label={`${m.ad} — ${s.projeler.inceleAria}`} />
+                <Link href={`/${dil}/projeler/${p.slug}`} className="absolute inset-0 z-10" aria-label={`${m.ad} — ${s.projeler.inceleAria}`} />
               </article>
             </Reveal>
             );

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Dil } from "@/i18n/config";
 import type { Sozluk } from "@/i18n/tr";
 
@@ -19,7 +20,7 @@ export default function Footer({ dil, s }: Props) {
     <footer className="border-t border-line px-6 py-12">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 md:flex-row md:justify-between md:gap-6">
         {/* Sol: isim */}
-        <a href={`/${dil}`} className="group flex items-center gap-2.5" aria-label={s.footer.basaDon}>
+        <Link href={`/${dil}`} className="group flex items-center gap-2.5" aria-label={s.footer.basaDon}>
           <span className="flex h-8 w-8 items-center justify-center rounded-md border border-line bg-ink-card font-mono text-xs font-bold text-accent transition-colors group-hover:border-accent">
             DK
           </span>
@@ -27,7 +28,7 @@ export default function Footer({ dil, s }: Props) {
             deniz<span className="text-muted">kilinc</span>
             <span className="text-accent">.dev</span>
           </span>
-        </a>
+        </Link>
 
         {/* Orta: bağlantılar */}
         <nav className="flex items-center gap-7">

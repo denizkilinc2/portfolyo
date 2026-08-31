@@ -1,41 +1,74 @@
 @import "tailwindcss";
 
 /* ============================================
-   1. KOYU TEMA (varsayılan)
+   1. AÇIK TEMA (varsayılan)
+   Sitenin tüm rengi buradan yönetilir.
    ============================================ */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
   /* Zeminler */
+  --ink: #faf8f5;
+  --ink-soft: #f3efe8;
+  --ink-card: #ebe5db;
+
+  /* Çizgiler */
+  --line: #ded6c9;
+  --line-strong: #c5baa9;
+
+  /* Metin */
+  --cream: #191713;
+  --muted: #6b6357;
+
+  /* Vurgu rengi */
+  --accent: #a35d00;
+  --accent-soft: #8a4e00;
+
+  /* Minyatür CV sayfasının kâğıt renkleri */
+  --paper: #ffffff;
+  --paper-line: #cdc4b4;
+  --paper-strong: #575044;
+  --paper-shadow: rgba(90, 78, 58, 0.25);
+
+  /* Katman ayarları */
+  --grain-opacity: 0.03;
+  --glow-opacity: 0.2;
+}
+
+/* ============================================
+   2. KOYU TEMA
+   data-theme="dark" ile devreye girer.
+   ============================================ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
   --ink: #0b0b0f;
   --ink-soft: #121219;
   --ink-card: #16161f;
 
-  /* Çizgiler */
   --line: #24242f;
   --line-strong: #34343f;
 
-  /* Metin */
   --cream: #f2f2f5;
   --muted: #9a9aa8;
 
-  /* Vurgu rengi */
   --accent: #f4b740;
   --accent-soft: #ffce6b;
 
-  /* Minyatür CV sayfasının kâğıt renkleri */
   --paper: #ebe6dc;
   --paper-line: #b4ada0;
   --paper-strong: #4d4842;
   --paper-shadow: rgba(0, 0, 0, 0.5);
 
-  /* Katman ayarları */
   --grain-opacity: 0.04;
   --glow-opacity: 0.14;
 }
 
 /* ============================================
-   2. AÇIK TEMA
+   2b. AÇIK TEMA (açıkça seçildiğinde)
+   Kullanıcı koyudan aydınlığa döndüğünde
+   data-theme="light" yazılıyor; :root ile
+   aynı değerleri taşıyor.
    ============================================ */
 [data-theme="light"] {
   color-scheme: light;
@@ -388,7 +421,7 @@ body::after {
 
 /* ============================================
    13. DEV MONOGRAM
-   Hero'nun sağında duran "DK" harfleri.
+   Hero'nun arkasında duran "DK" harfleri.
    Üç katman: sabit kontur + gezen akım + çarpma.
    ============================================ */
 .monogram {
@@ -403,6 +436,29 @@ body::after {
   font-family: var(--font-instrument), serif;
   font-size: clamp(11rem, 18vw, 23rem);
   letter-spacing: -0.05em;
+}
+
+/* Dar ekranlarda monogram ortalanıp küçülüyor;
+   metnin okunmasını engellemesin diye daha soluk. */
+@media (max-width: 1279px) {
+  .monogram {
+    right: 50%;
+    top: 42%;
+    transform: translate(50%, -50%);
+    font-size: clamp(9rem, 42vw, 18rem);
+  }
+
+  .monogram-taban {
+    opacity: 0.14;
+  }
+
+  .monogram-akim {
+    filter: drop-shadow(0 0 10px var(--accent));
+  }
+
+  .monogram-carpma {
+    filter: drop-shadow(0 0 16px var(--accent));
+  }
 }
 
 .monogram > span {

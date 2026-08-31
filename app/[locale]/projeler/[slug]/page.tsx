@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import Cursor from "@/components/Cursor";
 import ScrollProgress from "@/components/ScrollProgress";
 import CommandPalette from "@/components/CommandPalette";
@@ -94,21 +95,21 @@ export default async function ProjeDetay({
       {/* ---------- Üst çubuk ---------- */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-ink/70 backdrop-blur-xl">
         <nav className="mx-auto flex h-18 w-full max-w-4xl items-center justify-between px-6">
-          <a href={`/${locale}#projeler`} className="group flex items-center gap-2.5 text-sm text-muted transition-colors hover:text-accent">
+          <Link href={`/${locale}#projeler`} className="group flex items-center gap-2.5 text-sm text-muted transition-colors hover:text-accent">
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" className="transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true">
               <path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {s.detay.tumProjeler}
-          </a>
+          </Link>
 
           <div className="flex items-center gap-2.5">
             <LangSwitcher dil={locale} etiket={s.nav.dilSec} />
             <ThemeToggle />
-            <a href={`/${locale}`} className="flex items-center gap-2.5" aria-label={s.nav.anaSayfa}>
+            <Link href={`/${locale}`} className="flex items-center gap-2.5" aria-label={s.nav.anaSayfa}>
               <span className="flex h-8 w-8 items-center justify-center rounded-md border border-line bg-ink-card font-mono text-xs font-bold text-accent">
                 DK
               </span>
-            </a>
+            </Link>
           </div>
         </nav>
       </header>
@@ -289,25 +290,25 @@ export default async function ProjeDetay({
           <Reveal>
             <nav className="mt-28 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
               {onceki && (
-                <a href={`/${locale}/projeler/${onceki.slug}`} className="group flex flex-col gap-2 bg-ink-soft p-8 transition-colors duration-500 hover:bg-ink-card">
+                <Link href={`/${locale}/projeler/${onceki.slug}`} className="group flex flex-col gap-2 bg-ink-soft p-8 transition-colors duration-500 hover:bg-ink-card">
                   <span className="font-mono text-[0.65rem] uppercase tracking-wider text-muted">
                     ← {s.detay.oncekiProje}
                   </span>
                   <span className="font-display text-2xl leading-tight tracking-tight transition-colors duration-500 group-hover:text-accent">
                     {getProjeMetin(onceki.slug, locale).ad}
                   </span>
-                </a>
+                </Link>
               )}
 
               {sonraki && (
-                <a href={`/${locale}/projeler/${sonraki.slug}`} className="group flex flex-col items-start gap-2 bg-ink-soft p-8 transition-colors duration-500 hover:bg-ink-card sm:items-end sm:text-right">
+                <Link href={`/${locale}/projeler/${sonraki.slug}`} className="group flex flex-col items-start gap-2 bg-ink-soft p-8 transition-colors duration-500 hover:bg-ink-card sm:items-end sm:text-right">
                   <span className="font-mono text-[0.65rem] uppercase tracking-wider text-muted">
                     {s.detay.sonrakiProje} →
                   </span>
                   <span className="font-display text-2xl leading-tight tracking-tight transition-colors duration-500 group-hover:text-accent">
                     {getProjeMetin(sonraki.slug, locale).ad}
                   </span>
-                </a>
+                </Link>
               )}
             </nav>
           </Reveal>
@@ -321,9 +322,9 @@ export default async function ProjeDetay({
               </h2>
               <div className="mt-8 flex justify-center">
                 <Magnetic>
-                  <a href={`/${locale}#iletisim`} className="flex h-13 items-center rounded-full bg-accent px-8 font-medium text-ink transition-all duration-300 hover:bg-accent-soft hover:shadow-[0_0_40px_-8px_var(--accent)]">
+                  <Link href={`/${locale}#iletisim`} className="flex h-13 items-center rounded-full bg-accent px-8 font-medium text-ink transition-all duration-300 hover:bg-accent-soft hover:shadow-[0_0_40px_-8px_var(--accent)]">
                     {s.detay.cagriButon}
-                  </a>
+                  </Link>
                 </Magnetic>
               </div>
             </section>

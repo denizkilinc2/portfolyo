@@ -30,7 +30,7 @@ export default function Hero({ dil, s }: Props) {
       <div className="grid-bg pointer-events-none absolute inset-0 opacity-25" />
 
       {/* Dev DK monogramı — içinden akım geçer, sonra çarpar */}
-      <div className="monogram hidden xl:grid" aria-hidden="true">
+      <div className="monogram grid" aria-hidden="true">
         <span className="monogram-taban">DK</span>
         <span className="monogram-akim">DK</span>
         <span className="monogram-carpma">DK</span>

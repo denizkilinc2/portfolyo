@@ -4,57 +4,51 @@ import { useEffect, useRef } from "react";
 
 /* ============================================
    AYARLAR
-   Efekti güçlendirmek/zayıflatmak için burayı değiştir.
+   Masaüstü ve mobil için ayrı değerler.
    ============================================ */
-/* Kaç piksel kare alana bir parçacık düşsün (büyük değer = az parçacık) */
-const YOGUNLUK = 13000;
-const MAKS_PARCACIK = 110;
-/* İki nokta arası bu mesafeden yakınsa çizgi çizilir */
-const BAG_MESAFESI = 135;
-/* Farenin etki alanı */
-const FARE_MESAFESI = 180;
-/* Fare itme gücü */
-const FARE_GUCU = 1.6;
-/* Hareketin sönümlenmesi (1'e yakın = daha uzun savrulma) */
+const AYAR = {
+  masaustu: {
+    yogunluk: 13000,
+    maksParcacik: 110,
+    bagMesafesi: 135,
+    etkiMesafesi: 180,
+    guc: 1.6,
+    maksDarbe: 7,
+    darbeAraligi: 26,
+    parallax: 26,
+  },
+  mobil: {
+    /* Daha seyrek parçacık, daha kısa bağlantı:
+       telefonun işlemcisini ve pilini korur. */
+    yogunluk: 22000,
+    maksParcacik: 45,
+    bagMesafesi: 105,
+    etkiMesafesi: 130,
+    guc: 1.9,
+    maksDarbe: 3,
+    darbeAraligi: 40,
+    parallax: 0,
+  },
+};
+
 const SONUM = 0.94;
-/* Aynı anda ekranda olabilecek veri darbesi sayısı */
-const MAKS_DARBE = 7;
-/* Kaç karede bir yeni darbe denensin */
-const DARBE_ARALIGI = 26;
-/* Fare parallax şiddeti (piksel) */
-const PARALLAX = 26;
 
 type Nokta = {
   x: number;
   y: number;
   vx: number;
   vy: number;
-  /* Kuvvetlerden gelen kayma ve hızı */
   px: number;
   py: number;
   pvx: number;
   pvy: number;
-  /* Derinlik: 0 = uzak, 1 = yakın */
   z: number;
   r: number;
-  /* Nabız animasyonu için faz */
   faz: number;
 };
 
-type Darbe = {
-  a: number;
-  b: number;
-  /* 0 -> 1 arası ilerleme */
-  t: number;
-  hiz: number;
-};
-
-type Dalga = {
-  x: number;
-  y: number;
-  r: number;
-  alfa: number;
-};
+type Darbe = { a: number; b: number; t: number; hiz: number };
+type Dalga = { x: number; y: number; r: number; alfa: number };
 
 export default function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -63,13 +57,15 @@ export default function ParticleField() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    /* Dokunmatik cihazlarda ve animasyon azaltma tercihinde çalışma */
-    const fareVar = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    const azalt = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fareVar || azalt) return;
+    /* Animasyon azaltma tercihinde hiç çalışma */
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
+
+    /* Gerçek fare var mı? Yoksa dokunmatik kipte çalışıyoruz. */
+    const fareVar = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const a = fareVar ? AYAR.masaustu : AYAR.mobil;
 
     let genislik = 0;
     let yukseklik = 0;
@@ -80,16 +76,19 @@ export default function ParticleField() {
     let sayac = 0;
     let duruyor = false;
 
-    /* Fare konumu — ekran dışındayken çok uzakta tutuyoruz */
-    let fareX = -9999;
-    let fareY = -9999;
-    /* Yumuşatılmış parallax kayması */
+    /* Etki noktası: masaüstünde fare, mobilde parmak.
+       Ekran dışındayken çok uzakta tutuyoruz. */
+    let etkiX = -9999;
+    let etkiY = -9999;
+
+    /* Parmak kalktıktan sonra etkinin yumuşakça sönmesi için */
+    let etkiSonme = 0;
+
     let parX = 0;
     let parY = 0;
     let parHedefX = 0;
     let parHedefY = 0;
 
-    /* Tema renkleri */
     let renkCizgi = "#24242f";
     let renkNokta = "#34343f";
     let renkVurgu = "#f4b740";
@@ -101,13 +100,10 @@ export default function ParticleField() {
       renkVurgu = s.getPropertyValue("--accent").trim() || renkVurgu;
     };
 
-    /* Hex rengi rgba'ya çevirir — saydamlık verebilmek için */
     const rgba = (hex: string, alfa: number) => {
       const temiz = hex.replace("#", "");
       const tam =
-        temiz.length === 3
-          ? temiz.split("").map((c) => c + c).join("")
-          : temiz;
+        temiz.length === 3 ? temiz.split("").map((c) => c + c).join("") : temiz;
       const r = parseInt(tam.slice(0, 2), 16);
       const g = parseInt(tam.slice(2, 4), 16);
       const b = parseInt(tam.slice(4, 6), 16);
@@ -120,15 +116,15 @@ export default function ParticleField() {
       yukseklik = kutu.height;
 
       /* Retina ekranlarda net görünmesi için piksel oranı.
-         2 ile sınırlıyoruz, 3x ekranlarda gereksiz yük olmasın. */
+         Mobilde 2 ile sınırlıyoruz, 3x ekranlarda gereksiz yük olmasın. */
       const oran = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = genislik * oran;
       canvas.height = yukseklik * oran;
       ctx.setTransform(oran, 0, 0, oran, 0, 0);
 
       const adet = Math.min(
-        MAKS_PARCACIK,
-        Math.floor((genislik * yukseklik) / YOGUNLUK)
+        a.maksParcacik,
+        Math.floor((genislik * yukseklik) / a.yogunluk)
       );
 
       noktalar = Array.from({ length: adet }, () => {
@@ -136,7 +132,6 @@ export default function ParticleField() {
         return {
           x: Math.random() * genislik,
           y: Math.random() * yukseklik,
-          /* Yakın katmanlar daha hızlı süzülür */
           vx: (Math.random() - 0.5) * (0.12 + z * 0.24),
           vy: (Math.random() - 0.5) * (0.12 + z * 0.24),
           px: 0,
@@ -153,26 +148,25 @@ export default function ParticleField() {
       dalgalar = [];
     };
 
-    /* Yeni veri darbesi başlat: rastgele bir noktadan komşusuna */
     const darbeBaslat = () => {
-      if (darbeler.length >= MAKS_DARBE || noktalar.length < 2) return;
+      if (darbeler.length >= a.maksDarbe || noktalar.length < 2) return;
 
-      const a = Math.floor(Math.random() * noktalar.length);
+      const i = Math.floor(Math.random() * noktalar.length);
       const komsular: number[] = [];
 
       for (let j = 0; j < noktalar.length; j++) {
-        if (j === a) continue;
+        if (j === i) continue;
         const d = Math.hypot(
-          noktalar[a].x - noktalar[j].x,
-          noktalar[a].y - noktalar[j].y
+          noktalar[i].x - noktalar[j].x,
+          noktalar[i].y - noktalar[j].y
         );
-        if (d < BAG_MESAFESI) komsular.push(j);
+        if (d < a.bagMesafesi) komsular.push(j);
       }
 
       if (komsular.length === 0) return;
 
       darbeler.push({
-        a,
+        a: i,
         b: komsular[Math.floor(Math.random() * komsular.length)],
         t: 0,
         hiz: 0.012 + Math.random() * 0.014,
@@ -183,10 +177,19 @@ export default function ParticleField() {
       sayac += 1;
       ctx.clearRect(0, 0, genislik, yukseklik);
 
-      /* --- Parallax kaymasını yumuşat --- */
-      if (fareX > -9000) {
-        parHedefX = (fareX / genislik - 0.5) * -PARALLAX;
-        parHedefY = (fareY / yukseklik - 0.5) * -PARALLAX;
+      /* Parmak kalktıysa etkiyi yavaşça söndür */
+      if (etkiSonme > 0) {
+        etkiSonme -= 1;
+        if (etkiSonme === 0) {
+          etkiX = -9999;
+          etkiY = -9999;
+        }
+      }
+
+      /* --- Parallax (sadece masaüstü) --- */
+      if (a.parallax > 0 && etkiX > -9000) {
+        parHedefX = (etkiX / genislik - 0.5) * -a.parallax;
+        parHedefY = (etkiY / yukseklik - 0.5) * -a.parallax;
       }
       parX += (parHedefX - parX) * 0.05;
       parY += (parHedefY - parY) * 0.05;
@@ -196,40 +199,33 @@ export default function ParticleField() {
         n.x += n.vx;
         n.y += n.vy;
 
-        /* Kenardan çıkanı diğer kenardan sok */
         if (n.x < -30) n.x = genislik + 30;
         if (n.x > genislik + 30) n.x = -30;
         if (n.y < -30) n.y = yukseklik + 30;
         if (n.y > yukseklik + 30) n.y = -30;
 
-        /* Fare itmesi — kuvvet olarak ekleniyor */
-        const dx = n.x + n.px - fareX;
-        const dy = n.y + n.py - fareY;
+        const dx = n.x + n.px - etkiX;
+        const dy = n.y + n.py - etkiY;
         const uzaklik = Math.hypot(dx, dy);
 
-        if (uzaklik < FARE_MESAFESI && uzaklik > 0.1) {
-          /* Yakın katmanlar daha çok itilir — derinlik hissi */
-          const guc =
-            (1 - uzaklik / FARE_MESAFESI) * FARE_GUCU * (0.4 + n.z * 0.9);
-          n.pvx += (dx / uzaklik) * guc;
-          n.pvy += (dy / uzaklik) * guc;
+        if (uzaklik < a.etkiMesafesi && uzaklik > 0.1) {
+          const g = (1 - uzaklik / a.etkiMesafesi) * a.guc * (0.4 + n.z * 0.9);
+          n.pvx += (dx / uzaklik) * g;
+          n.pvy += (dy / uzaklik) * g;
         }
 
-        /* Tıklama dalgalarının itmesi */
         for (const d of dalgalar) {
           const wx = n.x + n.px - d.x;
           const wy = n.y + n.py - d.y;
           const wd = Math.hypot(wx, wy);
-          /* Sadece dalga cephesindeki bant etkilenir */
           const bant = Math.abs(wd - d.r);
           if (bant < 55 && wd > 0.1) {
-            const guc = (1 - bant / 55) * d.alfa * 2.4;
-            n.pvx += (wx / wd) * guc;
-            n.pvy += (wy / wd) * guc;
+            const g = (1 - bant / 55) * d.alfa * 2.4;
+            n.pvx += (wx / wd) * g;
+            n.pvy += (wy / wd) * g;
           }
         }
 
-        /* Yaya bağlı gibi yerine dönme + sönümleme */
         n.pvx += -n.px * 0.012;
         n.pvy += -n.py * 0.012;
         n.pvx *= SONUM;
@@ -240,34 +236,30 @@ export default function ParticleField() {
         n.faz += 0.014;
       }
 
-      /* Bir noktanın ekrandaki son konumu (parallax dahil) */
       const kx = (n: Nokta) => n.x + n.px + parX * (0.25 + n.z * 0.85);
       const ky = (n: Nokta) => n.y + n.py + parY * (0.25 + n.z * 0.85);
 
       /* --- Bağlantı çizgileri --- */
       for (let i = 0; i < noktalar.length; i++) {
-        const a = noktalar[i];
-        const ax = kx(a);
-        const ay = ky(a);
+        const p = noktalar[i];
+        const ax = kx(p);
+        const ay = ky(p);
 
         for (let j = i + 1; j < noktalar.length; j++) {
-          const b = noktalar[j];
-          const bx = kx(b);
-          const by = ky(b);
+          const q = noktalar[j];
+          const bx = kx(q);
+          const by = ky(q);
 
           const mesafe = Math.hypot(ax - bx, ay - by);
-          if (mesafe > BAG_MESAFESI) continue;
+          if (mesafe > a.bagMesafesi) continue;
 
-          const gucluluk = 1 - mesafe / BAG_MESAFESI;
-          /* Derin katmanların çizgileri daha soluk */
-          const derinlik = 0.35 + ((a.z + b.z) / 2) * 0.65;
+          const gucluluk = 1 - mesafe / a.bagMesafesi;
+          const derinlik = 0.35 + ((p.z + q.z) / 2) * 0.65;
 
-          /* Çizginin orta noktası fareye yakınsa kehribara dön */
           const ortaX = (ax + bx) / 2;
           const ortaY = (ay + by) / 2;
-          const fareUzak = Math.hypot(ortaX - fareX, ortaY - fareY);
-          const yakinlik =
-            fareUzak < FARE_MESAFESI ? 1 - fareUzak / FARE_MESAFESI : 0;
+          const uzak = Math.hypot(ortaX - etkiX, ortaY - etkiY);
+          const yakinlik = uzak < a.etkiMesafesi ? 1 - uzak / a.etkiMesafesi : 0;
 
           ctx.strokeStyle =
             yakinlik > 0.05
@@ -283,31 +275,27 @@ export default function ParticleField() {
       }
 
       /* --- Veri darbeleri --- */
-      if (sayac % DARBE_ARALIGI === 0) darbeBaslat();
+      if (sayac % a.darbeAraligi === 0) darbeBaslat();
 
       darbeler = darbeler.filter((d) => {
         d.t += d.hiz;
         if (d.t >= 1) return false;
 
-        const a = noktalar[d.a];
-        const b = noktalar[d.b];
-        if (!a || !b) return false;
+        const p = noktalar[d.a];
+        const q = noktalar[d.b];
+        if (!p || !q) return false;
 
-        const ax = kx(a);
-        const ay = ky(a);
-        const bx = kx(b);
-        const by = ky(b);
+        const ax = kx(p);
+        const ay = ky(p);
+        const bx = kx(q);
+        const by = ky(q);
 
-        /* Bağlantı koptuysa darbeyi de bitir */
-        if (Math.hypot(ax - bx, ay - by) > BAG_MESAFESI * 1.3) return false;
+        if (Math.hypot(ax - bx, ay - by) > a.bagMesafesi * 1.3) return false;
 
         const x = ax + (bx - ax) * d.t;
         const y = ay + (by - ay) * d.t;
-
-        /* Başta ve sonda sönük, ortada parlak */
         const parlaklik = Math.sin(d.t * Math.PI);
 
-        /* Arkasında bıraktığı kısa iz */
         const izT = Math.max(0, d.t - 0.16);
         ctx.strokeStyle = rgba(renkVurgu, parlaklik * 0.5);
         ctx.lineWidth = 1.2;
@@ -316,13 +304,11 @@ export default function ParticleField() {
         ctx.lineTo(x, y);
         ctx.stroke();
 
-        /* Işık noktası */
         ctx.fillStyle = rgba(renkVurgu, parlaklik * 0.95);
         ctx.beginPath();
         ctx.arc(x, y, 1.6, 0, Math.PI * 2);
         ctx.fill();
 
-        /* Çevresindeki hale */
         ctx.fillStyle = rgba(renkVurgu, parlaklik * 0.15);
         ctx.beginPath();
         ctx.arc(x, y, 5, 0, Math.PI * 2);
@@ -331,7 +317,7 @@ export default function ParticleField() {
         return true;
       });
 
-      /* --- Tıklama dalgaları --- */
+      /* --- Dokunma / tıklama dalgaları --- */
       dalgalar = dalgalar.filter((d) => {
         d.r += 11;
         d.alfa *= 0.955;
@@ -350,16 +336,13 @@ export default function ParticleField() {
       for (const n of noktalar) {
         const x = kx(n);
         const y = ky(n);
-        const fareUzak = Math.hypot(x - fareX, y - fareY);
-        const yakin = fareUzak < FARE_MESAFESI;
-        const yakinlik = yakin ? 1 - fareUzak / FARE_MESAFESI : 0;
+        const uzak = Math.hypot(x - etkiX, y - etkiY);
+        const yakinlik = uzak < a.etkiMesafesi ? 1 - uzak / a.etkiMesafesi : 0;
 
-        /* Hafif nabız — hepsi aynı anda atmasın diye faz farkı var */
         const nabiz = 1 + Math.sin(n.faz) * 0.16;
         const yaricap = n.r * nabiz * (1 + yakinlik * 0.5);
         const derinlik = 0.3 + n.z * 0.7;
 
-        /* Fareye yakın noktaların etrafında hale */
         if (yakinlik > 0.15) {
           ctx.fillStyle = rgba(renkVurgu, yakinlik * 0.12);
           ctx.beginPath();
@@ -380,23 +363,55 @@ export default function ParticleField() {
       frame = requestAnimationFrame(ciz);
     };
 
-    const onMove = (e: MouseEvent) => {
+    /* Ekran koordinatını canvas koordinatına çevirir */
+    const konum = (clientX: number, clientY: number) => {
       const kutu = canvas.getBoundingClientRect();
-      fareX = e.clientX - kutu.left;
-      fareY = e.clientY - kutu.top;
+      return { x: clientX - kutu.left, y: clientY - kutu.top };
     };
 
-    const onClick = (e: MouseEvent) => {
-      const kutu = canvas.getBoundingClientRect();
-      const x = e.clientX - kutu.left;
-      const y = e.clientY - kutu.top;
-      /* Sadece hero alanı içindeki tıklamalar dalga üretsin */
+    const dalgaEkle = (x: number, y: number) => {
       if (x < 0 || y < 0 || x > genislik || y > yukseklik) return;
       if (dalgalar.length > 3) return;
       dalgalar.push({ x, y, r: 0, alfa: 1 });
     };
 
-    /* Sekme arka plana alınınca animasyonu durdur */
+    /* --- Masaüstü olayları --- */
+    const onMouseMove = (e: MouseEvent) => {
+      const p = konum(e.clientX, e.clientY);
+      etkiX = p.x;
+      etkiY = p.y;
+    };
+
+    const onMouseDown = (e: MouseEvent) => {
+      const p = konum(e.clientX, e.clientY);
+      dalgaEkle(p.x, p.y);
+    };
+
+    /* --- Dokunmatik olayları --- */
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      const p = konum(t.clientX, t.clientY);
+      etkiX = p.x;
+      etkiY = p.y;
+      etkiSonme = 0;
+      dalgaEkle(p.x, p.y);
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      const p = konum(t.clientX, t.clientY);
+      etkiX = p.x;
+      etkiY = p.y;
+      etkiSonme = 0;
+    };
+
+    /* Parmak kalkınca etki hemen kesilmesin, ~1 saniye sönsün */
+    const onTouchEnd = () => {
+      etkiSonme = 60;
+    };
+
     const onVisibility = () => {
       if (document.hidden) {
         duruyor = true;
@@ -407,7 +422,6 @@ export default function ParticleField() {
       }
     };
 
-    /* Tema değişince renkleri yeniden oku */
     const gozlemci = new MutationObserver(renkleriOku);
     gozlemci.observe(document.documentElement, {
       attributes: true,
@@ -419,17 +433,28 @@ export default function ParticleField() {
     frame = requestAnimationFrame(ciz);
 
     window.addEventListener("resize", kur);
-    window.addEventListener("mousemove", onMove, { passive: true });
-    window.addEventListener("mousedown", onClick);
     document.addEventListener("visibilitychange", onVisibility);
+
+    if (fareVar) {
+      window.addEventListener("mousemove", onMouseMove, { passive: true });
+      window.addEventListener("mousedown", onMouseDown);
+    } else {
+      /* passive: true — sayfa kaydırmayı engellemiyoruz */
+      window.addEventListener("touchstart", onTouchStart, { passive: true });
+      window.addEventListener("touchmove", onTouchMove, { passive: true });
+      window.addEventListener("touchend", onTouchEnd, { passive: true });
+    }
 
     return () => {
       cancelAnimationFrame(frame);
       gozlemci.disconnect();
       window.removeEventListener("resize", kur);
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mousedown", onClick);
       document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
     };
   }, []);
 

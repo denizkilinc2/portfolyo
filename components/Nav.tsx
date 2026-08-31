@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import LangSwitcher from "./LangSwitcher";
 import type { Dil } from "@/i18n/config";
@@ -81,7 +82,7 @@ export default function Nav({ dil, s }: Props) {
       >
         <nav className="mx-auto flex h-18 w-full max-w-6xl items-center justify-between px-6">
           {/* Sol: isim */}
-          <a href={`/${dil}`} className="group flex items-center gap-2.5" aria-label={s.nav.anaSayfa}>
+          <Link href={`/${dil}`} className="group flex items-center gap-2.5" aria-label={s.nav.anaSayfa}>
             <span className="flex h-8 w-8 items-center justify-center rounded-md border border-line bg-ink-card font-mono text-xs font-bold text-accent transition-colors group-hover:border-accent">
               DK
             </span>
@@ -89,7 +90,7 @@ export default function Nav({ dil, s }: Props) {
               deniz<span className="text-muted">kilinc</span>
               <span className="text-accent">.dev</span>
             </span>
-          </a>
+          </Link>
 
           {/* Orta: masaüstü bağlantıları */}
           <ul className="hidden items-center gap-9 md:flex">
