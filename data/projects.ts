@@ -98,7 +98,7 @@ export const projects: Project[] = [
     no: "09",
     slug: "otel-temizlik-takip",
     kategori: "Web",
-    stack: ["Laravel", "PHP", "PostgreSQL", "Blade", "Tailwind CSS"],
+    stack: ["Laravel", "PHP", "MariaDB", "Blade", "QR", "cPanel"],
     demo: "https://teknohygiene.com/",
   },
   {
@@ -123,7 +123,7 @@ export const projects: Project[] = [
     no: "13",
     slug: "anadolu-diyabet-okulu",
     kategori: "Web",
-    stack: ["Laravel", "PHP", "PostgreSQL", "Blade", "Tailwind CSS"],
+    stack: ["Laravel", "PHP", "MySQL", "Blade", "Bunny Stream", "cPanel"],
     demo: "https://anadoludiyabetokulu.com/",
   },
   {

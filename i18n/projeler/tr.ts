@@ -163,11 +163,42 @@ export const projelerTr: ProjeMetinleri = {
   "otel-temizlik-takip": {
     ad: "Otel Temizlik Takip",
     ozet:
-      "Otellerde oda temizliğini QR kod üzerinden takip eden yönetim sistemi. Personel odayı okutuyor, yönetici tüm katların anlık durumunu tek ekrandan görüyor.",
+      "QR kod tabanlı, çok dilli otel operasyon sistemi. Admin, müdür ve personel için ayrı yetki katmanları; misafirler QR okutarak kendi arayüzüne giriyor. Otellere satılan ve her kuruluma özel yapılandırılan ticari bir ürün olarak geliştirildi.",
     vurgular: [
-      "QR kod tabanlı oda okutma akışı ve anlık durum güncellemesi.",
-      "Kat, oda ve personel bazlı yetkilendirilmiş yönetim paneli.",
-      "İlişkisel veritabanı şeması üzerinde raporlama ve geçmiş takibi.",
+      "Admin, müdür, personel ve misafir olmak üzere dört ayrı rol ve yetki katmanı.",
+      "QR kod okutma akışıyla oda durumunun anlık güncellenmesi; müdür tüm katları tek ekrandan izliyor.",
+      "Çok dilli arayüz — hem yabancı misafirler hem de farklı dil konuşan personel için.",
+      "Kat, oda ve personel bazlı raporlama ile geçmiş temizlik kayıtlarının takibi.",
+      "Her otel için ayrı kurulum ve özelleştirme yapılabilecek yapılandırılabilir mimari.",
+    ],
+    rol: "Uçtan uca geliştirme",
+    problem:
+      "Otel temizlik operasyonunda asıl zorluk, bir odanın o an hangi durumda olduğunu tüm ekibin aynı anda bilmesi. Kat görevlisi, kat şefi ve resepsiyon arasındaki bilgi akışı koptuğunda misafir hazır olmayan bir odaya yönlendirilebiliyor. Bunun üzerine, sistemin farklı dilleri konuşan personelle çalışması ve satılan her otelin kendi ihtiyacına göre yapılandırılabilmesi gerekiyordu.",
+    cozum:
+      "Her odaya bir QR kod tanımladım; personel odaya girdiğinde kodu okutuyor ve durum anında merkezi sisteme yazılıyor. Yetkileri dört katmana ayırdım: admin sistemi yönetiyor, müdür tüm katların anlık durumunu tek ekrandan görüyor, personel yalnızca kendi görevlerini, misafir ise QR üzerinden kendine ayrılmış arayüze ulaşıyor. Arayüzü baştan çok dilli kurguladım. Her otele ayrı kurulum yapılabilmesi için otel bilgileri, oda yapısı ve marka öğeleri yapılandırılabilir tutuldu.",
+    sonuc:
+      "Sistem teknohygiene.com adresinde canlıda. Ticari ürün olarak konumlandırıldı; satılan her otel için ayrı kurulum yapılıp o otelin yapısına göre özelleştiriliyor.",
+    neden: [
+      {
+        baslik: "Neden QR kod?",
+        aciklama:
+          "NFC veya özel bir el terminali donanım yatırımı gerektirirdi. QR kod, personelin kendi telefonuyla çalışıyor; otelin tek yapması gereken kâğıt etiketleri odalara asmak.",
+      },
+      {
+        baslik: "Neden mobil uygulama değil de web?",
+        aciklama:
+          "Uygulama olsaydı her personelin kurulum yapması, mağaza onayı beklemesi ve güncellemeleri indirmesi gerekirdi. Tarayıcı üzerinden çalışan bir sistemde QR okutmak doğrudan doğru sayfayı açıyor, kurulum adımı hiç yok.",
+      },
+      {
+        baslik: "Neden çok dilli?",
+        aciklama:
+          "Otel personeli ve misafir kitlesi çoğu zaman aynı dili konuşmuyor. Dil desteği sonradan eklenen bir özellik değil, sistemin ilk günden tasarım kararıydı.",
+      },
+      {
+        baslik: "Neden Laravel?",
+        aciklama:
+          "Yetkilendirme, çoklu rol ve yönetim paneli gibi ihtiyaçların tamamı çerçevenin içinde hazır geliyor. Ayrıca hedef müşterilerin kullandığı cPanel hosting'lerde ek maliyetsiz çalışıyor.",
+      },
     ],
   },
 
@@ -193,8 +224,6 @@ export const projelerTr: ProjeMetinleri = {
     ],
   },
 
-
-
   "resnet-vgg-kiyaslama": {
     ad: "ResNet50 & VGG19 Model Kıyaslama",
     ozet:
@@ -209,11 +238,42 @@ export const projelerTr: ProjeMetinleri = {
   "anadolu-diyabet-okulu": {
     ad: "Anadolu Diyabet Okulu",
     ozet:
-      "Diyabet hastaları ve yakınları için eğitim içerikleri sunan kurumsal sağlık platformu. İçerik yönetim paneliyle birlikte uçtan uca geliştirildi.",
+      "Diyabet hastaları ve yakınları için kurulan çok modüllü eğitim platformu. Tanıtım sayfaları, ders ve öğrenci paneli, sepet ve sipariş akışıyla kurs satışı, yönetim paneli ve ayrı girişli Kronik Rehber modülünü bir arada barındırıyor.",
     vurgular: [
-      "Yönetim panelinden düzenlenebilen dinamik içerik ve sayfa yapısı.",
-      "Kurumsal kimliğe uygun, mobil uyumlu arayüz mimarisi.",
-      "Laravel ve PostgreSQL üzerine kurulu ölçeklenebilir backend.",
+      "Öğrenci paneli, ders takibi ve içerik yönetimini bir arada yürüten çok modüllü platform mimarisi.",
+      "Ders videolarının Bunny Stream üzerinde barındırılması; dosya kullanıcının tarayıcısından doğrudan servise gidiyor, sunucudan hiç geçmiyor.",
+      "Sepet ve sipariş akışıyla kurulmuş kurs satış altyapısı.",
+      "Ayrı giriş ve yetkilendirmeye sahip bağımsız Kronik Rehber modülü.",
+      "cPanel ortamına taşınıp SSL sertifikasıyla canlıya alınması.",
+    ],
+    rol: "Uçtan uca geliştirme ve canlıya alma",
+    problem:
+      "Kurumun elindeki site sade bir tanıtım sayfasıydı; eğitim içeriğini yayımlayacak, öğrencilerin ilerlemesini takip edecek veya kurs satışı yapacak bir altyapısı yoktu. Buna ek olarak ciddi bir teknik kısıt vardı: kurumun paylaşımlı hosting paketi video barındırmaya izin vermiyordu, oysa platformun özü ders videolarıydı.",
+    cozum:
+      "Siteyi baştan aşağı yeniden kurdum ve çok modüllü bir platforma dönüştürdüm: tanıtım sayfaları, ücretsiz derslerin sunulduğu öğrenci paneli, sepet ve sipariş akışıyla satış katmanı, içerik yönetimi için admin paneli ve ayrı girişi olan Kronik Rehber modülü. Video kısıtını, dosyaları Bunny Stream üzerinde barındırarak çözdüm — yönetici panelden yükleme yaptığında dosya doğrudan tarayıcıdan Bunny'ye gidiyor, hosting sunucusuna hiç uğramıyor. Son aşamada platformu cPanel ortamına taşıyıp DNS'i çevirdim ve SSL ile canlıya aldım.",
+    sonuc:
+      "Platform anadoludiyabetokulu.com adresinde SSL sertifikasıyla yayında. Kurum ders içeriğini, sayfa metinlerini ve kurs yapısını yönetim panelinden kendisi güncelleyebiliyor; video altyapısı hosting kısıtından tamamen bağımsız çalışıyor.",
+    neden: [
+      {
+        baslik: "Neden Bunny Stream?",
+        aciklama:
+          "Paylaşımlı hosting paketleri video barındırmaya izin vermiyor ve verse bile bant genişliği ilk yüz izleyicide tükenirdi. Bunny Stream ile dosya kullanıcının tarayıcısından doğrudan servise yükleniyor; sunucu ne depolama ne de bant genişliği yükü alıyor.",
+      },
+      {
+        baslik: "Neden MySQL'e geçildi?",
+        aciklama:
+          "Geliştirme PostgreSQL ile başlamıştı ama kurumun cPanel hosting'i MySQL sunuyordu. Canlı ortamla geliştirme ortamının aynı veritabanını kullanması, taşıma sırasında sürpriz çıkmasını engelledi.",
+      },
+      {
+        baslik: "Neden Kronik Rehber ayrı bir modül?",
+        aciklama:
+          "Farklı bir kullanıcı kitlesine ve farklı bir erişim mantığına sahipti. Ana platformun içine gömmek yerine ayrı giriş ve yetkilendirmeyle kurgulamak, iki tarafın da birbirini etkilemeden gelişmesine izin verdi.",
+      },
+      {
+        baslik: "Neden Laravel?",
+        aciklama:
+          "Öğrenci hesapları, yetkilendirme, sipariş akışı ve yönetim paneli gibi katmanların tamamı çerçevenin sunduğu yapılarla kuruldu. Ayrıca kurumun mevcut cPanel hosting'inde ek maliyet olmadan çalışıyor.",
+      },
     ],
   },
 

@@ -164,11 +164,42 @@ export const projelerEn: KismiProjeMetinleri = {
   "otel-temizlik-takip": {
     ad: "Hotel Housekeeping Tracker",
     ozet:
-      "A management system that tracks hotel room cleaning through QR codes. Staff scan the room, and the manager sees the live status of every floor on a single screen.",
+      "A QR-based, multilingual hotel operations system. Separate permission layers for admins, managers and staff, with guests reaching their own interface by scanning a code. Built as a commercial product sold to hotels and configured individually for each installation.",
     vurgular: [
-      "QR-based room scanning flow with instant status updates.",
-      "Permission-controlled management panel organised by floor, room and staff member.",
-      "Reporting and history tracking built on a relational database schema.",
+      "Four distinct roles and permission layers: admin, manager, staff and guest.",
+      "QR scanning flow that updates room status instantly; the manager sees every floor on a single screen.",
+      "Multilingual interface, serving both international guests and staff who speak different languages.",
+      "Reporting by floor, room and staff member, with a full history of past cleaning records.",
+      "Configurable architecture allowing a separate, customised installation for each hotel.",
+    ],
+    rol: "End-to-end development",
+    problem:
+      "The core difficulty in hotel housekeeping is that everyone needs to know a room's current state at the same moment. When information flow breaks down between the room attendant, the floor supervisor and reception, a guest can be sent to a room that isn't ready. On top of that, the system had to work for staff speaking different languages, and every hotel it was sold to needed its own configuration.",
+    cozum:
+      "I assigned a QR code to every room; staff scan it on entry and the status is written to the central system immediately. Permissions are split into four layers: the admin manages the system, the manager sees the live status of every floor on one screen, staff see only their own assignments, and guests reach a dedicated interface through the code. The interface was built multilingual from the start. To allow a separate installation per hotel, room structure, hotel details and branding were all kept configurable.",
+    sonuc:
+      "The system is live at teknohygiene.com. It is positioned as a commercial product: each hotel that buys it gets its own installation, customised to that hotel's structure.",
+    neden: [
+      {
+        baslik: "Why QR codes?",
+        aciklama:
+          "NFC or a dedicated handheld terminal would have required a hardware investment. QR codes work with the staff's own phones — all the hotel has to do is put paper labels on the doors.",
+      },
+      {
+        baslik: "Why web instead of a mobile app?",
+        aciklama:
+          "An app would have meant every staff member installing it, waiting for store approval and downloading updates. With a browser-based system, scanning the code opens the right page directly — there is no installation step at all.",
+      },
+      {
+        baslik: "Why multilingual?",
+        aciklama:
+          "Hotel staff and guests often don't share a language. Language support wasn't bolted on later; it was a design decision from the first day.",
+      },
+      {
+        baslik: "Why Laravel?",
+        aciklama:
+          "Authorisation, multiple roles and an admin panel all come built into the framework. It also runs at no extra cost on the cPanel hosting the target customers already use.",
+      },
     ],
   },
 
@@ -194,8 +225,6 @@ export const projelerEn: KismiProjeMetinleri = {
     ],
   },
 
-
-
   "resnet-vgg-kiyaslama": {
     ad: "ResNet50 & VGG19 Model Comparison",
     ozet:
@@ -210,11 +239,42 @@ export const projelerEn: KismiProjeMetinleri = {
   "anadolu-diyabet-okulu": {
     ad: "Anadolu Diabetes School",
     ozet:
-      "A corporate health platform providing educational content for people with diabetes and their families, developed end to end together with its content management panel.",
+      "A multi-module education platform for people with diabetes and their families. It brings together public pages, a lesson and student panel, course sales through a cart and order flow, an admin panel, and a separately authenticated Chronic Guide module.",
     vurgular: [
-      "Dynamic content and page structure editable from the management panel.",
-      "Responsive interface architecture aligned with the organisation's corporate identity.",
-      "Scalable backend built on Laravel and PostgreSQL.",
+      "Multi-module platform architecture running the student panel, lesson tracking and content management together.",
+      "Lesson videos hosted on Bunny Stream — the file goes straight from the user's browser to the service, never touching the server.",
+      "Course sales infrastructure built around a cart and order flow.",
+      "An independent Chronic Guide module with its own login and permissions.",
+      "Migration to cPanel and deployment to production with an SSL certificate.",
+    ],
+    rol: "End-to-end development and deployment",
+    problem:
+      "The organisation's existing site was a plain brochure page, with no infrastructure to publish educational content, track student progress or sell courses. There was also a hard technical constraint: the organisation's shared hosting package did not allow video hosting, yet lesson videos were the very core of the platform.",
+    cozum:
+      "I rebuilt the site from the ground up as a multi-module platform: public pages, a student panel serving the free lessons, a sales layer with cart and order flow, an admin panel for content management, and a separately authenticated Chronic Guide module. I solved the video constraint by hosting files on Bunny Stream — when an admin uploads, the file travels directly from the browser to Bunny and never passes through the hosting server. Finally I migrated the platform to cPanel, switched the DNS and took it live with SSL.",
+    sonuc:
+      "The platform is live at anadoludiyabetokulu.com with a valid SSL certificate. The organisation updates lesson content, page copy and course structure itself through the admin panel, and the video infrastructure runs entirely independently of the hosting constraint.",
+    neden: [
+      {
+        baslik: "Why Bunny Stream?",
+        aciklama:
+          "Shared hosting packages don't allow video hosting, and even if they did, the bandwidth would run out after the first hundred viewers. With Bunny Stream the file uploads straight from the user's browser to the service, so the server carries neither the storage nor the bandwidth load.",
+      },
+      {
+        baslik: "Why the move to MySQL?",
+        aciklama:
+          "Development started on PostgreSQL, but the organisation's cPanel hosting offered MySQL. Matching the development database to production removed any surprises during migration.",
+      },
+      {
+        baslik: "Why is Chronic Guide a separate module?",
+        aciklama:
+          "It served a different audience with a different access model. Building it with its own login and permissions, rather than embedding it in the main platform, let both sides evolve without affecting each other.",
+      },
+      {
+        baslik: "Why Laravel?",
+        aciklama:
+          "Student accounts, authorisation, the order flow and the admin panel were all built on structures the framework already provides. It also runs at no extra cost on the organisation's existing cPanel hosting.",
+      },
     ],
   },
 

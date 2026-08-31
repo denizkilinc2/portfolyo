@@ -164,11 +164,42 @@ export const projelerNl: KismiProjeMetinleri = {
   "otel-temizlik-takip": {
     ad: "Hotelschoonmaakbeheer",
     ozet:
-      "Een beheersysteem dat het schoonmaken van hotelkamers volgt via QR-codes. Medewerkers scannen de kamer, de leiding ziet de actuele status van alle verdiepingen op één scherm.",
+      "Een QR-gebaseerd, meertalig hotelbeheersysteem. Aparte rechtenlagen voor beheerders, managers en medewerkers; gasten bereiken hun eigen interface door een code te scannen. Gebouwd als commercieel product dat aan hotels wordt verkocht en per installatie apart wordt geconfigureerd.",
     vurgular: [
-      "QR-gebaseerde scanflow voor kamers met directe statusupdates.",
-      "Beheerpaneel met rechten, ingedeeld per verdieping, kamer en medewerker.",
-      "Rapportage en historiek op basis van een relationeel databaseschema.",
+      "Vier afzonderlijke rollen en rechtenlagen: beheerder, manager, medewerker en gast.",
+      "QR-scanflow die de kamerstatus direct bijwerkt; de leiding ziet alle verdiepingen op één scherm.",
+      "Meertalige interface — zowel voor internationale gasten als voor medewerkers met verschillende talen.",
+      "Rapportage per verdieping, kamer en medewerker, met een volledige historiek van schoonmaakbeurten.",
+      "Configureerbare architectuur die per hotel een eigen, aangepaste installatie mogelijk maakt.",
+    ],
+    rol: "Volledige ontwikkeling",
+    problem:
+      "De kern van het probleem bij hotelschoonmaak is dat iedereen op hetzelfde moment moet weten in welke staat een kamer verkeert. Zodra de informatiestroom tussen kamermeisje, verdiepingschef en receptie hapert, wordt een gast naar een kamer gestuurd die nog niet klaar is. Daarbovenop moest het systeem werken met personeel dat verschillende talen spreekt, en voor elk verkocht hotel apart configureerbaar zijn.",
+    cozum:
+      "Ik heb elke kamer een QR-code toegewezen; medewerkers scannen die bij binnenkomst en de status wordt direct naar het centrale systeem geschreven. De rechten zijn in vier lagen verdeeld: de beheerder beheert het systeem, de manager ziet de live status van alle verdiepingen op één scherm, medewerkers zien alleen hun eigen taken en gasten komen via de code op een eigen interface. De interface is vanaf het begin meertalig opgezet. Om per hotel een eigen installatie mogelijk te maken, zijn kamerstructuur, hotelgegevens en merkelementen configureerbaar gehouden.",
+    sonuc:
+      "Het systeem draait live op teknohygiene.com. Het is gepositioneerd als commercieel product: elk hotel dat het aanschaft krijgt een eigen installatie, aangepast aan de structuur van dat hotel.",
+    neden: [
+      {
+        baslik: "Waarom QR-codes?",
+        aciklama:
+          "NFC of een eigen handterminal zou een hardware-investering hebben gevraagd. QR-codes werken met de telefoons van de medewerkers zelf — het hotel hoeft alleen papieren labels op de deuren te plakken.",
+      },
+      {
+        baslik: "Waarom web in plaats van een mobiele app?",
+        aciklama:
+          "Bij een app zou elke medewerker moeten installeren, op storegoedkeuring moeten wachten en updates moeten downloaden. In een browsergebaseerd systeem opent de scan direct de juiste pagina — er is helemaal geen installatiestap.",
+      },
+      {
+        baslik: "Waarom meertalig?",
+        aciklama:
+          "Hotelpersoneel en gasten spreken vaak niet dezelfde taal. Taalondersteuning is er niet later bij gebouwd, maar was vanaf dag één een ontwerpbeslissing.",
+      },
+      {
+        baslik: "Waarom Laravel?",
+        aciklama:
+          "Autorisatie, meerdere rollen en een beheerpaneel zitten al in het framework. Bovendien draait het zonder extra kosten op de cPanel-hosting die de doelklanten toch al gebruiken.",
+      },
     ],
   },
 
@@ -208,11 +239,42 @@ export const projelerNl: KismiProjeMetinleri = {
   "anadolu-diyabet-okulu": {
     ad: "Anadolu Diabetesschool",
     ozet:
-      "Een zorgplatform met educatieve content voor mensen met diabetes en hun naasten, volledig ontwikkeld inclusief contentbeheerpaneel.",
+      "Een educatief platform met meerdere modules voor mensen met diabetes en hun naasten. Het brengt publieke pagina's, een les- en studentenpaneel, cursusverkoop via winkelwagen en bestelflow, een beheerpaneel en een apart ingelogde Chronische Gids-module samen.",
     vurgular: [
-      "Dynamische content en paginastructuur, bewerkbaar vanuit het beheerpaneel.",
-      "Responsieve interface-architectuur die aansluit op de huisstijl van de organisatie.",
-      "Schaalbare backend op basis van Laravel en PostgreSQL.",
+      "Platformarchitectuur met meerdere modules die studentenpaneel, lesvoortgang en contentbeheer samen laat draaien.",
+      "Lesvideo's gehost op Bunny Stream — het bestand gaat rechtstreeks van de browser van de gebruiker naar de dienst en raakt de server nooit.",
+      "Verkoopinfrastructuur voor cursussen met winkelwagen en bestelflow.",
+      "Een zelfstandige Chronische Gids-module met eigen login en rechten.",
+      "Migratie naar cPanel en livegang met een SSL-certificaat.",
+    ],
+    rol: "Volledige ontwikkeling en deployment",
+    problem:
+      "De bestaande site van de organisatie was een eenvoudige presentatiepagina, zonder infrastructuur om educatieve content te publiceren, de voortgang van studenten te volgen of cursussen te verkopen. Daarbij kwam een harde technische beperking: het shared hosting-pakket stond geen videohosting toe, terwijl lesvideo's juist de kern van het platform vormden.",
+    cozum:
+      "Ik heb de site vanaf de grond opnieuw opgebouwd als platform met meerdere modules: publieke pagina's, een studentenpaneel voor de gratis lessen, een verkooplaag met winkelwagen en bestelflow, een beheerpaneel voor de content en een apart ingelogde Chronische Gids-module. De videobeperking heb ik opgelost door de bestanden op Bunny Stream te hosten — bij een upload gaat het bestand rechtstreeks vanuit de browser naar Bunny en passeert het de hostingserver nooit. Tot slot heb ik het platform naar cPanel gemigreerd, de DNS omgezet en het met SSL live gezet.",
+    sonuc:
+      "Het platform draait live op anadoludiyabetokulu.com met een geldig SSL-certificaat. De organisatie werkt lescontent, paginateksten en cursusstructuur zelf bij via het beheerpaneel; de video-infrastructuur functioneert volledig los van de hostingbeperking.",
+    neden: [
+      {
+        baslik: "Waarom Bunny Stream?",
+        aciklama:
+          "Shared hosting-pakketten staan geen videohosting toe, en zelfs als dat wel zo was, zou de bandbreedte na de eerste honderd kijkers op zijn. Met Bunny Stream uploadt het bestand rechtstreeks vanuit de browser naar de dienst, waardoor de server noch opslag- noch bandbreedtelast draagt.",
+      },
+      {
+        baslik: "Waarom de overstap naar MySQL?",
+        aciklama:
+          "De ontwikkeling begon met PostgreSQL, maar de cPanel-hosting van de organisatie bood MySQL. Dezelfde database in ontwikkeling en productie gebruiken voorkwam verrassingen bij de migratie.",
+      },
+      {
+        baslik: "Waarom is de Chronische Gids een aparte module?",
+        aciklama:
+          "Die bediende een ander publiek met een ander toegangsmodel. Door hem met een eigen login en eigen rechten te bouwen in plaats van in het hoofdplatform te verwerken, konden beide kanten zich onafhankelijk ontwikkelen.",
+      },
+      {
+        baslik: "Waarom Laravel?",
+        aciklama:
+          "Studentaccounts, autorisatie, de bestelflow en het beheerpaneel zijn allemaal gebouwd op structuren die het framework al meebrengt. Bovendien draait het zonder extra kosten op de bestaande cPanel-hosting van de organisatie.",
+      },
     ],
   },
 

@@ -164,11 +164,42 @@ export const projelerDe: KismiProjeMetinleri = {
   "otel-temizlik-takip": {
     ad: "Hotel-Reinigungsverwaltung",
     ozet:
-      "Ein Verwaltungssystem, das die Zimmerreinigung in Hotels über QR-Codes verfolgt. Das Personal scannt das Zimmer, die Leitung sieht den Live-Status aller Etagen auf einem einzigen Bildschirm.",
+      "Ein QR-basiertes, mehrsprachiges Hotelbetriebssystem. Getrennte Berechtigungsebenen für Administratoren, Manager und Personal; Gäste gelangen per Code-Scan zu ihrer eigenen Oberfläche. Entwickelt als kommerzielles Produkt, das an Hotels verkauft und für jede Installation individuell konfiguriert wird.",
     vurgular: [
-      "QR-basierter Scan-Ablauf für Zimmer mit sofortiger Statusaktualisierung.",
-      "Rechtebasiertes Verwaltungspanel, gegliedert nach Etage, Zimmer und Mitarbeiter.",
-      "Auswertungen und Verlaufsverfolgung auf Basis eines relationalen Datenbankschemas.",
+      "Vier getrennte Rollen und Berechtigungsebenen: Administrator, Manager, Personal und Gast.",
+      "QR-Scan-Ablauf mit sofortiger Aktualisierung des Zimmerstatus; die Leitung sieht alle Etagen auf einem Bildschirm.",
+      "Mehrsprachige Oberfläche — für internationale Gäste wie auch für Personal mit unterschiedlichen Sprachen.",
+      "Auswertungen nach Etage, Zimmer und Mitarbeiter samt vollständigem Verlauf der Reinigungen.",
+      "Konfigurierbare Architektur, die für jedes Hotel eine eigene, angepasste Installation erlaubt.",
+    ],
+    rol: "Durchgängige Entwicklung",
+    problem:
+      "Die zentrale Schwierigkeit in der Hotelreinigung besteht darin, dass alle Beteiligten den aktuellen Zustand eines Zimmers gleichzeitig kennen müssen. Bricht der Informationsfluss zwischen Zimmermädchen, Etagenleitung und Rezeption ab, wird ein Gast in ein noch nicht fertiges Zimmer geschickt. Zusätzlich musste das System mit Personal funktionieren, das unterschiedliche Sprachen spricht, und für jedes verkaufte Hotel individuell konfigurierbar sein.",
+    cozum:
+      "Ich habe jedem Zimmer einen QR-Code zugewiesen; das Personal scannt ihn beim Betreten, und der Status wird sofort ins zentrale System geschrieben. Die Berechtigungen sind in vier Ebenen aufgeteilt: Der Administrator verwaltet das System, die Leitung sieht den Live-Status aller Etagen auf einem Bildschirm, das Personal nur die eigenen Aufgaben, und der Gast erreicht über den Code eine eigene Oberfläche. Die Oberfläche war von Beginn an mehrsprachig angelegt. Damit für jedes Hotel eine eigene Installation möglich ist, wurden Zimmerstruktur, Hoteldaten und Markenelemente konfigurierbar gehalten.",
+    sonuc:
+      "Das System ist unter teknohygiene.com live. Es ist als kommerzielles Produkt positioniert: Jedes Hotel, das es erwirbt, erhält eine eigene, an seine Struktur angepasste Installation.",
+    neden: [
+      {
+        baslik: "Warum QR-Codes?",
+        aciklama:
+          "NFC oder ein eigenes Handterminal hätten eine Hardware-Investition erfordert. QR-Codes funktionieren mit den Telefonen des Personals — das Hotel muss lediglich Papieretiketten an den Türen anbringen.",
+      },
+      {
+        baslik: "Warum Web statt einer mobilen App?",
+        aciklama:
+          "Eine App hätte bedeutet, dass jeder Mitarbeiter sie installiert, auf die Store-Freigabe wartet und Updates herunterlädt. In einem browserbasierten System öffnet der Scan direkt die richtige Seite — ein Installationsschritt entfällt vollständig.",
+      },
+      {
+        baslik: "Warum mehrsprachig?",
+        aciklama:
+          "Hotelpersonal und Gäste sprechen häufig nicht dieselbe Sprache. Die Sprachunterstützung wurde nicht nachträglich ergänzt, sondern war vom ersten Tag an eine Designentscheidung.",
+      },
+      {
+        baslik: "Warum Laravel?",
+        aciklama:
+          "Autorisierung, mehrere Rollen und ein Verwaltungspanel bringt das Framework bereits mit. Zudem läuft es ohne Zusatzkosten auf dem cPanel-Hosting, das die Zielkunden ohnehin nutzen.",
+      },
     ],
   },
 
@@ -208,11 +239,42 @@ export const projelerDe: KismiProjeMetinleri = {
   "anadolu-diyabet-okulu": {
     ad: "Anadolu Diabetes-Schule",
     ozet:
-      "Eine Gesundheitsplattform mit Bildungsinhalten für Menschen mit Diabetes und ihre Angehörigen, durchgängig entwickelt einschließlich Content-Management-Panel.",
+      "Eine mehrmodulige Bildungsplattform für Menschen mit Diabetes und ihre Angehörigen. Sie vereint öffentliche Seiten, ein Kurs- und Schülerpanel, Kursverkauf über Warenkorb und Bestellablauf, ein Verwaltungspanel sowie ein separat authentifiziertes Modul „Chronik-Ratgeber\".",
     vurgular: [
-      "Dynamische Inhalte und Seitenstruktur, im Verwaltungspanel bearbeitbar.",
-      "Responsive Oberflächenarchitektur im Einklang mit der Corporate Identity.",
-      "Skalierbares Backend auf Basis von Laravel und PostgreSQL.",
+      "Mehrmodulige Plattformarchitektur, die Schülerpanel, Kursverfolgung und Inhaltsverwaltung zusammenführt.",
+      "Kursvideos auf Bunny Stream gehostet — die Datei geht direkt vom Browser des Nutzers an den Dienst und berührt den Server nie.",
+      "Verkaufsinfrastruktur für Kurse mit Warenkorb und Bestellablauf.",
+      "Ein eigenständiges Modul „Chronik-Ratgeber\" mit eigenem Login und eigenen Berechtigungen.",
+      "Migration auf cPanel und Livegang mit SSL-Zertifikat.",
+    ],
+    rol: "Durchgängige Entwicklung und Deployment",
+    problem:
+      "Die bestehende Website der Einrichtung war eine schlichte Präsentationsseite ohne Infrastruktur, um Bildungsinhalte zu veröffentlichen, den Lernfortschritt zu verfolgen oder Kurse zu verkaufen. Hinzu kam eine harte technische Einschränkung: Das Shared-Hosting-Paket erlaubte kein Video-Hosting — dabei waren Kursvideos der eigentliche Kern der Plattform.",
+    cozum:
+      "Ich habe die Website von Grund auf als mehrmodulige Plattform neu aufgebaut: öffentliche Seiten, ein Schülerpanel für die kostenlosen Kurse, eine Verkaufsebene mit Warenkorb und Bestellablauf, ein Verwaltungspanel für die Inhalte sowie ein separat authentifiziertes Modul „Chronik-Ratgeber\". Die Video-Einschränkung habe ich gelöst, indem die Dateien auf Bunny Stream liegen — beim Upload wandert die Datei direkt vom Browser zu Bunny und passiert den Hosting-Server nie. Zuletzt habe ich die Plattform auf cPanel migriert, das DNS umgestellt und sie mit SSL live geschaltet.",
+    sonuc:
+      "Die Plattform ist unter anadoludiyabetokulu.com mit gültigem SSL-Zertifikat online. Die Einrichtung aktualisiert Kursinhalte, Seitentexte und Kursstruktur selbst über das Verwaltungspanel; die Video-Infrastruktur läuft vollständig unabhängig von der Hosting-Einschränkung.",
+    neden: [
+      {
+        baslik: "Warum Bunny Stream?",
+        aciklama:
+          "Shared-Hosting-Pakete erlauben kein Video-Hosting, und selbst wenn, wäre die Bandbreite nach den ersten hundert Zuschauern erschöpft. Mit Bunny Stream lädt die Datei direkt vom Browser des Nutzers zum Dienst — der Server trägt weder Speicher- noch Bandbreitenlast.",
+      },
+      {
+        baslik: "Warum der Wechsel zu MySQL?",
+        aciklama:
+          "Die Entwicklung begann mit PostgreSQL, das cPanel-Hosting der Einrichtung bot jedoch MySQL. Dieselbe Datenbank in Entwicklung und Produktion zu verwenden, verhinderte Überraschungen bei der Migration.",
+      },
+      {
+        baslik: "Warum ist der Chronik-Ratgeber ein eigenes Modul?",
+        aciklama:
+          "Er richtet sich an eine andere Zielgruppe mit einem anderen Zugriffsmodell. Ihn mit eigenem Login und eigenen Berechtigungen zu bauen, statt ihn in die Hauptplattform einzubetten, ließ beide Seiten unabhängig voneinander wachsen.",
+      },
+      {
+        baslik: "Warum Laravel?",
+        aciklama:
+          "Schülerkonten, Autorisierung, Bestellablauf und Verwaltungspanel wurden alle auf Strukturen aufgebaut, die das Framework bereits mitbringt. Zudem läuft es ohne Zusatzkosten auf dem bestehenden cPanel-Hosting der Einrichtung.",
+      },
     ],
   },
 
