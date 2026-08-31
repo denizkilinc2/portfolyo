@@ -6,24 +6,34 @@ import CvButton from "./CvButton";
 import type { Dil } from "@/i18n/config";
 import type { Sozluk } from "@/i18n/tr";
 
-/* Hero'da gösterilecek teknolojiler — dile bağlı değil */
-const stack = [
-  "Python",
-  "Kotlin",
-  "C++",
-  "ROS2",
-  "TensorFlow",
-  "Next.js",
-  "Node.js",
-  "PostgreSQL",
-];
-
 type Props = {
   dil: Dil;
   s: Sozluk;
 };
 
 export default function Hero({ dil, s }: Props) {
+  /* Alan bazlı teknoloji şeridi.
+     Başlıklar sözlükten geliyor (dört dilde çevrili),
+     teknoloji adları marka adı olduğu için ortak. */
+  const alanlar = [
+    {
+      baslik: s.hakkimda.yetenekAI,
+      teknolojiler: ["PyTorch", "TensorFlow", "YOLOv8", "TFLite"],
+    },
+    {
+      baslik: s.hakkimda.yetenekGomulu,
+      teknolojiler: ["ROS2", "CUDA", "STM32", "C++"],
+    },
+    {
+      baslik: s.hakkimda.yetenekMobil,
+      teknolojiler: ["Kotlin", "Jetpack Compose", "React Native"],
+    },
+    {
+      baslik: s.hakkimda.yetenekWeb,
+      teknolojiler: ["Next.js", "TypeScript", "Laravel", "Node.js"],
+    },
+  ];
+
   return (
     <section className="relative flex min-h-dvh items-center overflow-hidden px-6 pb-20 pt-28">
       {/* --- Arka plan katmanları --- */}
@@ -115,19 +125,32 @@ export default function Hero({ dil, s }: Props) {
           </div>
         </div>
 
-        {/* Teknoloji şeridi */}
-        <div className="rise d-5 mt-12 max-w-3xl">
+        {/* Alan bazlı teknoloji şeridi.
+            Mobilde alt alta, geniş ekranda dörtlü ızgara. */}
+        <div className="rise d-5 mt-10 max-w-4xl">
           <div className="hairline" />
-          <ul className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2.5">
-            {stack.map((tech) => (
-              <li
-                key={tech}
-                className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted transition-colors hover:text-accent"
-              >
-                {tech}
-              </li>
+          <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+            {alanlar.map((alan) => (
+              <div key={alan.baslik} className="group">
+                <dt className="flex items-center gap-2.5 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-accent">
+                  <span className="h-px w-3 bg-accent transition-all duration-500 group-hover:w-5" />
+                  {alan.baslik}
+                </dt>
+                <dd className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8rem] leading-relaxed text-muted">
+                  {alan.teknolojiler.map((tech, i) => (
+                    <span key={tech} className="flex items-center gap-2">
+                      {i > 0 && (
+                        <span className="text-line-strong" aria-hidden="true">
+                          ·
+                        </span>
+                      )}
+                      {tech}
+                    </span>
+                  ))}
+                </dd>
+              </div>
             ))}
-          </ul>
+          </dl>
         </div>
       </div>
     </section>
