@@ -4,20 +4,27 @@ export const projelerTr: ProjeMetinleri = {
   rhinoai: {
     ad: "RhinoAI",
     ozet:
-      "Kullanıcıların yüz fotoğrafları üzerinden rinoplasti ve fasiyal oran analizi yapan mobil yapay zekâ uygulaması. Yüz landmark tespiti ve derin öğrenme modellerini cihaz üzerinde gerçek zamanlı koşturur.",
+      "Rinoplasti öncesi ve sonrası yüz oranlarını nesnel biçimde ölçen mobil yapay zekâ uygulaması. Yüz landmark tespiti ve derin öğrenme çıkarımı tamamen cihaz üzerinde, gerçek zamanlı çalışır.",
     vurgular: [
       "ML Kit Face Mesh ile 468 yüz referans noktasının tespiti ve asimetri hesaplamaları.",
+      "Canlı kamera akışında 30+ FPS ile nazolabial ve dorsal açıların anlık analizi.",
       "TFLite formatına optimize edilmiş modellerle cihaz üzerinde düşük gecikmeli çıkarım.",
       "MVVM ve Jetpack Compose ile modern, reaktif Android mimarisi.",
+      "Açık kaynak olarak GitHub'da yayımlandı.",
     ],
-    rol: "Uçtan uca geliştirme",
+    rol: "Bireysel geliştirici — mobil ve uç yapay zekâ",
     problem:
-      "Rinoplasti öncesi yüz oranı analizi, klinik ortamda uzman ölçümü gerektiren ve kişinin kendi başına erişemediği bir süreç. Mevcut mobil çözümler ise fotoğrafı sunucuya yüklüyor — bu hem gizlilik sorunu yaratıyor hem de internet bağlantısına bağımlı kılıyor.",
+      "Rinoplasti öncesi ve sonrası analizde ameliyat planlaması ve asimetri tespiti büyük ölçüde hekimin öznel gözlemine dayanıyor. Hastaya açısal ve milimetrik oranları anlık gösteren hafif bir mobil araç yoktu. Mevcut mobil çözümler ise fotoğrafı sunucuya yüklüyor — bu hem mahremiyet sorunu yaratıyor hem de internet bağlantısına bağımlı kılıyor.",
     cozum:
-      "Yüz landmark tespitini ve derin öğrenme çıkarımını tamamen cihaz üzerinde çalıştıran bir Android uygulaması geliştirdim. ML Kit Face Mesh ile 468 referans noktası tespit ediliyor, bu noktalardan fasiyal oranlar ve asimetri değerleri hesaplanıyor. Ağır sınıflandırma modelleri TensorFlow Lite formatına dönüştürülüp niceleme ile küçültüldü.",
+      "Kotlin ve Jetpack Compose üzerine yerel bir Android mimarisi kurdum. ML Kit Face Mesh entegrasyonuyla yüz işaretçileri milisaniyeler içinde haritalanıyor; görüntü analizi ve burun açısı hesaplamaları için TensorFlow Lite modellerini doğrudan cihaz üzerinde çalıştırdım. Ağır sınıflandırma modelleri TFLite formatına dönüştürülüp niceleme ile küçültüldü.",
     sonuc:
-      "Fotoğraf hiçbir zaman cihazdan çıkmıyor, analiz internet bağlantısı olmadan çalışıyor. Sunucu maliyeti sıfır.",
+      "Sıfır sunucu maliyetiyle tamamen yerel çalışan, canlı kamera akışında 30+ FPS ile yüz hatlarını ve nazolabial/dorsal açıları analiz eden bir uygulama ortaya çıktı. Açık kaynak olarak yayımlandı.",
     neden: [
+      {
+        baslik: "Neden cihaz üzerinde çıkarım?",
+        aciklama:
+          "Görüntü akışını bir Python FastAPI arka ucuna göndermek yerine her şeyi cihazda çalıştırmayı seçtim. Sağlıkla ilgili bir uygulamada fotoğrafın hiç cihazdan çıkmaması, sunucu tarafında alınabilecek her önlemden daha güçlü bir mahremiyet güvencesi. Aynı karar sıfır gecikme ve internet bağımsızlığı da getirdi.",
+      },
       {
         baslik: "Neden TensorFlow Lite?",
         aciklama:
@@ -34,20 +41,26 @@ export const projelerTr: ProjeMetinleri = {
   "otonom-insansiz-kara-araci": {
     ad: "Otonom İnsansız Kara Aracı",
     ozet:
-      "Teknoloji Geliştirme Topluluğu bünyesinde geliştirilen; gerçek zamanlı nesne tespiti, engel sakınma ve otonom sürüş algoritmalarını barındıran gömülü sistem projesi.",
+      "Teknoloji Geliştirme ve Uygulama Topluluğu bünyesinde geliştirilen; gerçek zamanlı nesne tespiti, engel sakınma ve otonom sürüş algoritmalarını barındıran gömülü sistem projesi.",
     vurgular: [
       "Jetson Orin Nano üzerinde CUDA hızlandırmalı YOLOv8 ile yüksek FPS'li nesne ve engel tespiti.",
-      "ROS2 düğümleri arasında sensör ve kamera verisinin düşük gecikmeli haberleşme mimarisi.",
-      "Dinamik ortam koşullarında rota optimizasyonu ve otonom navigasyon.",
+      "ROS2 tabanlı dağıtık düğüm mimarisiyle sensör, karar ve hareket katmanlarının ayrıştırılması.",
+      "Algılanan nesne konumlarının motor sürücü kontrol algoritmalarına düşük gecikmeli aktarımı.",
+      "Zorlu parkurlarda sahada test edilmiş dinamik rota düzeltme yeteneği.",
     ],
-    rol: "Görüntü işleme ve otonom sürüş yazılımı",
+    rol: "Otonom algoritmalar ve gömülü görüntü işleme",
     problem:
-      "Otonom bir kara aracının engelden kaçınabilmesi için nesneyi görmesi yetmez; kararı çarpmadan önce vermesi gerekir. Sınırlı güce sahip gömülü bir kartta yüksek kare hızında nesne tespiti çalıştırmak ve bu veriyi hareket kontrolüne gecikmesiz iletmek, projenin asıl zorluğuydu.",
+      "Zorlu zemin koşullarında ve engelli sahalarda aracın insan müdahalesi olmadan çevreyi gerçek zamanlı algılaması, engellerden kaçınması ve hedef rotayı takip etmesi gerekiyordu. Asıl zorluk şuydu: nesneyi görmek yetmez, kararın çarpmadan önce verilmesi gerekir — üstelik sınırlı güce sahip gömülü bir kart üzerinde.",
     cozum:
-      "Algılama, karar ve hareket katmanlarını ayrı ROS2 düğümleri olarak kurguladım; aralarındaki iletişimi düşük gecikmeli mesaj kanalları üzerinden yürüttüm. YOLOv8 modelini Jetson Orin Nano üzerinde CUDA hızlandırmasıyla çalıştırdım. Tespit edilen nesnelerin konumu, dinamik rota optimizasyonu yapan navigasyon düğümüne besleniyor.",
+      "ROS2 tabanlı dağıtık bir düğüm mimarisi kurguladım; algılama, karar ve hareket katmanları birbirinden bağımsız düğümler olarak çalışıyor ve aralarında düşük gecikmeli mesaj kanallarıyla haberleşiyor. YOLOv8 modelini Jetson Orin Nano üzerinde CUDA hızlandırmasıyla optimize ederek nesne tespit boru hattını kurdum; tespit edilen nesnelerin konumu doğrudan motor sürücü kontrol algoritmalarına aktarılıyor.",
     sonuc:
-      "Araç, önceden tanımlanmamış engellerin bulunduğu ortamda rotasını gerçek zamanlı yeniden hesaplayarak otonom ilerleyebiliyor.",
+      "Gerçek zamanlı engel algılama ve dinamik rota düzeltme yeteneğine sahip, zorlu parkurlarda sahada test edilmiş çalışan bir otonom kara aracı platformu ortaya çıktı.",
     neden: [
+      {
+        baslik: "Neden CUDA hızlandırmalı YOLOv8?",
+        aciklama:
+          "MobileNet gibi CPU üzerinde koşan hafif modeller daha az güç harcardı ama sahadaki küçük ve karmaşık engellerde doğruluk kaybı veriyordu. Jetson üzerinde donanım hızlandırması, doğruluktan ödün vermeden yüksek FPS'e ulaşmayı sağladı.",
+      },
       {
         baslik: "Neden ROS2?",
         aciklama:
@@ -64,23 +77,73 @@ export const projelerTr: ProjeMetinleri = {
   "time-to-work": {
     ad: "Time to Work International B.V.",
     ozet:
-      "Uluslararası istihdam ve danışmanlık hizmeti sunan Hollanda merkezli şirket için geliştirilen yüksek performanslı, çok dilli kurumsal web platformu.",
+      "Uluslararası iş gücü ve istihdam hizmeti sunan Hollanda merkezli şirket için sıfırdan kurulan, çok dilli ve SEO odaklı kurumsal web platformu.",
     vurgular: [
-      "Next.js App Router ve SSR/SSG mimarisiyle üst düzey SEO ve hızlı yükleme.",
-      "Framer Motion ile akıcı mikro-etkileşimler ve kurumsal tasarım dili.",
-      "i18n ile çok dilli içerik yönetimi ve mobil uyumlu arayüz mimarisi.",
+      "Next.js App Router üzerine kurulu, SSR ve statik üretimi birlikte kullanan modüler mimari.",
+      "Performans kaybı yaratmayan dinamik çok dilli (i18n) yapı.",
+      "Framer Motion ile akıcı arayüz etkileşimleri ve kurumsal tasarım dili.",
+      "Tüm cihazlarda sorunsuz çalışan duyarlı başvuru akışı.",
     ],
-    rol: "Uçtan uca geliştirme",
+    rol: "Frontend mimarisi, lokalizasyon ve dağıtım",
+    problem:
+      "Şirketin mevcut web altyapısı yavaştı, duyarlı tasarım standartlarının gerisindeydi ve çok dilli desteği hantal çalışıyordu. Uluslararası aday ve şirketlere hitap eden bir kurumun dijital yüzü olarak kurumsal kimliği yansıtmakta da yetersiz kalıyordu.",
+    cozum:
+      "Next.js App Router, TypeScript ve Tailwind CSS temelinde modüler ve SEO odaklı bir mimari kurdum. Arayüz etkileşimleri için Framer Motion entegre ettim. Çok dilli yapıyı, her dil için ayrı sayfa üretilecek ve performans bedeli doğurmayacak şekilde kurguladım.",
+    sonuc:
+      "Uluslararası adayların ve şirketlerin her cihazdan rahatça başvuru yapabildiği kurumsal platform yayına alındı ve halen ttw-international.nl adresinde çalışıyor.",
+    neden: [
+      {
+        baslik: "Neden Next.js SSR/SSG, klasik React SPA değil?",
+        aciklama:
+          "Uluslararası bir istihdam şirketinde arama motorundan gelen trafik doğrudan iş demek. Tek sayfalık bir React uygulamasında içerik tarayıcıda üretilir ve arama motorları için gecikmeli görünür. Sunucu tarafı üretim ve statik sayfalarla hem indeksleme hem ilk yükleme süresi maksimuma çıktı.",
+      },
+      {
+        baslik: "Neden dinamik i18n?",
+        aciklama:
+          "Çok dilli siteler genelde ya her dili ayrı bir kod tabanına ayırır ya da tüm çevirileri istemciye yükler. İlki bakımı imkânsızlaştırır, ikincisi sayfa boyutunu şişirir. Sayfa başına yalnızca o dilin metinlerinin gittiği bir yapı kurdum.",
+      },
+      {
+        baslik: "Neden Tailwind?",
+        aciklama:
+          "Kurumsal kimliğe özel bir tasarım gerekiyordu ve hazır bileşen kütüphanesi kullanmak her ekranda kimliği zorlamak demekti. Tailwind, tasarımı sıfırdan kurarken tutarlı bir ölçek ve renk sistemi sağladı.",
+      },
+    ],
   },
 
   focuspulse: {
     ad: "FocusPulse",
     ozet:
-      "Kullanıcının çalışma esnasındaki dikkat ve odak durumunu kamera verisi üzerinden analiz eden, gizlilik odaklı takip sistemi. Tüm işlem cihaz üzerinde yapılır.",
+      "Çalışma seansları sırasında odak ve dikkat durumunu kamera verisi üzerinden analiz eden Android uygulaması. Tüm işlem cihaz üzerinde yapılır, görüntü hiç dışarı çıkmaz.",
     vurgular: [
       "Göz kırpma frekansı, kafa pozisyonu ve bakış yönü takibiyle dikkat dağınıklığı tespiti.",
-      "Veriyi hiçbir sunucuya göndermeden tamamen yerel işleyerek gizlilik ve düşük gecikme.",
-      "Çalışma periyotlarına göre odaklanma skorları ve istatistiksel raporlama.",
+      "Anlık odak dağılma indeksi hesaplayan, cihaz üzerinde çalışan görüntü işleme mimarisi.",
+      "TFLite formatına dönüştürülmüş modellerle düşük gecikmeli çıkarım.",
+      "Dinamik mola önerileri ve uyarı geri bildirimleri.",
+      "Veri hiçbir sunucuya gitmeden tamamen yerel işlenir.",
+    ],
+    rol: "Bireysel geliştirici — Android ve uç yapay zekâ",
+    problem:
+      "Uzaktan çalışmada ve yoğun seanslarda odak kaybı ile yorgunluk nesnel olarak takip edilemiyor. Piyasadaki çözümlerin çoğu ise kamera görüntüsünü buluta aktarıyor — yani çalışanı izlemek için mahremiyetinden vazgeçmesini istiyor.",
+    cozum:
+      "Göz kırpma frekansı, kafa pozisyonu ve bakış yönünü analiz eden, tamamen cihaz üzerinde çalışan bir Android uygulaması geliştirdim. Model tarafını Python ve OpenCV ile prototipleyip TFLite formatına dönüştürdüm; uygulama içinde bu hafifletilmiş modeller çalışıyor. Sinyaller anlık bir odak dağılma indeksine dönüştürülüyor ve buna göre dinamik mola önerileri üretiliyor.",
+    sonuc:
+      "Kullanıcı görüntüsünü asla cihaz dışına çıkarmayan, anlık odak indeksini hesaplayan ve mola geri bildirimleri üreten çalışan bir Android uygulaması ortaya çıktı.",
+    neden: [
+      {
+        baslik: "Neden bulut değil, cihaz üzerinde çıkarım?",
+        aciklama:
+          "Bulut tabanlı görsel analiz API'leri daha güçlü modeller sunuyor ama sistemin amacıyla çelişiyor: kişinin çalışırken sürekli izlendiği bir uygulamada görüntünün buluta gitmesi kabul edilemez. Cihaz üzerinde hafifletilmiş çıkarım hem bu sorunu tamamen ortadan kaldırdı hem de ağ bağımlılığını sıfırladı.",
+      },
+      {
+        baslik: "Neden model Python'da geliştirildi ama uygulama Kotlin?",
+        aciklama:
+          "Model denemeleri ve doğrulama için Python ekosistemi karşılaştırılamayacak kadar hızlı. Ama son ürün bir Android uygulaması olacaktı; modeli TFLite'a dönüştürüp Kotlin tarafında çalıştırmak, geliştirme hızından ödün vermeden yerel performans sağladı.",
+      },
+      {
+        baslik: "Neden davranış sinyalleri, doğrudan sınıflandırma değil?",
+        aciklama:
+          "\"Odaklanmış / dağınık\" diye tek bir sınıflandırma yapmak yerine göz kırpma, kafa pozisyonu ve bakış yönü gibi ayrı sinyalleri ölçüp bunlardan bir indeks türetmeyi seçtim. Böylece sonuç açıklanabilir kaldı — kullanıcı neden uyarı aldığını görebiliyor.",
+      },
     ],
   },
 
@@ -110,11 +173,31 @@ export const projelerTr: ProjeMetinleri = {
   "vit-bigru-pipeline": {
     ad: "Hybrid ViT-BiGRU Pipeline",
     ozet:
-      "Görsel verilerden uzamsal öznitelik çıkarmak için Vision Transformer, zamansal örüntüleri yakalamak için Bi-directional GRU ağlarını birleştiren hibrit derin öğrenme modeli.",
+      "Görsel verilerden uzamsal öznitelikleri Vision Transformer ile, zamansal örüntüleri çift yönlü GRU ağlarıyla yakalayan hibrit derin öğrenme ardışık düzeni.",
     vurgular: [
-      "ViT ile self-attention tabanlı öznitelik çıkarımı, BiGRU katmanlarıyla sekans modelleme.",
+      "ViT bloklarının uzamsal öznitelik çıkarıcı olarak kullanılması, çıkan vektörlerin BiGRU katmanlarına aktarılması.",
+      "PyTorch ve TensorFlow üzerinde CUDA hızlandırmalı eğitim ve doğrulama döngüleri.",
       "Veri ön işleme, data augmentation ve overfitting önleyici düzenlileştirme teknikleri.",
       "Confusion matrix, ROC eğrileri ve eğitim metriklerinin görselleştirilmesi.",
+    ],
+    rol: "Derin öğrenme araştırmacısı ve model geliştirici",
+    problem:
+      "Yalnızca konvolüsyonel ya da yalnızca tekrarlamalı mimariler, ardışık görsel verilerde iki şeyi aynı anda yakalayamıyor: karedeki uzamsal detay ile kareler arasındaki uzun vadeli zamansal bağlam. Biri güçlendiğinde diğeri zayıflıyor.",
+    cozum:
+      "Vision Transformer bloklarının uzamsal öznitelik çıkarıcı olarak kullanıldığı, çıkan vektörlerin çift yönlü BiGRU katmanlarına aktarıldığı hibrit bir ardışık düzen kodladım. Python, PyTorch ve TensorFlow üzerinde CUDA hızlandırmalı eğitim ve doğrulama döngülerini kurdum; sonuçları confusion matrix, ROC eğrileri ve eğitim metrikleriyle görselleştirdim.",
+    sonuc:
+      "Standart CNN-LSTM modellerine kıyasla karmaşık zamansal veri kümelerinde doğruluk ve F1-score metriklerinde ölçülebilir artış sağlayan, akademik ve pratik kullanıma uygun bir model mimarisi elde edildi.",
+    neden: [
+      {
+        baslik: "Neden LSTM değil BiGRU?",
+        aciklama:
+          "GRU, LSTM'e göre daha az parametreyle çalışıyor; bu eğitim süresini ve bellek tüketimini ciddi oranda düşürdü. Çift yönlü yapı sayesinde model hem geçmiş hem gelecek bağlamı görebiliyor, dolayısıyla parametreden kazanılan yer başarımdan kaybettirmedi.",
+      },
+      {
+        baslik: "Neden ViT, CNN değil?",
+        aciklama:
+          "Konvolüsyonel katmanlar yerel örüntüleri iyi yakalıyor ama uzak bölgeler arasındaki ilişkiyi kurmakta zorlanıyor. Vision Transformer'ın self-attention yapısı, karenin tamamındaki ilişkileri tek adımda değerlendirdiği için sekans modeline daha zengin bir öznitelik vektörü besliyor.",
+      },
     ],
   },
 
@@ -205,33 +288,93 @@ export const projelerTr: ProjeMetinleri = {
   "stm32-arduino-gomulu": {
     ad: "STM32 & Arduino Gömülü Sistemler",
     ozet:
-      "Turuncu Bilişim bünyesindeki donanım çalışmaları kapsamında geliştirilen; sensör entegrasyonu, veri işleme ve çevresel birim kontrolü sağlayan düşük seviyeli gömülü yazılımlar.",
+      "Sensör verilerinin senkron toplanması, yerel ekranlara düşük gecikmeyle basılması ve mikrodenetleyiciler arası haberleşme standardının kurulması üzerine geliştirilen düşük seviyeli gömülü yazılımlar.",
     vurgular: [
-      "I2C, SPI ve UART protokolleri üzerinden analog/dijital sensör verilerinin okunması ve işlenmesi.",
-      "Kesmeler, zamanlayıcılar ve PWM sinyalleriyle hassas donanım kontrolü.",
+      "STM32 üzerinde HAL/LL kütüphaneleriyle register ve sürücü seviyesinde kodlama.",
+      "I2C, SPI ve UART protokolleri üzerinden SSD1306 OLED ekran ve sensör modülleri için haberleşme sürücüleri.",
+      "Kesmeler ve zamanlayıcılarla yönetilen, kilitlenmeye kapalı gerçek zamanlı okuma mimarisi.",
       "Düşük güç tüketimi ve gerçek zamanlı tepki süreleri için bellek ve kod optimizasyonu.",
+    ],
+    rol: "Gömülü yazılım geliştirici",
+    problem:
+      "Donanım düzeyinde sıcaklık, ivme ve mesafe gibi sensör verilerinin senkron biçimde toplanması, yerel ekranlara düşük gecikmeyle basılması ve mikrodenetleyiciler arası güvenli bir haberleşme standardının kurulması gerekiyordu.",
+    cozum:
+      "C ve C++ kullanarak STM32 üzerinde HAL/LL kütüphaneleriyle ve Arduino Uno üzerinde register seviyesinde kodlama yaptım. I2C, SPI ve UART protokolleri üzerinden SSD1306 OLED ekranlar ve çeşitli sensör modülleri için haberleşme sürücüleri geliştirdim. Okuma döngüsünü kesmeler ve zamanlayıcılar üzerine kurdum.",
+    sonuc:
+      "Donanım kilitlenmelerinden arındırılmış, kesmelerle yönetilen, gerçek zamanlı veri okuma ve görselleştirme yapabilen stabil donanım prototipleri üretildi.",
+    neden: [
+      {
+        baslik: "Neden kesme tabanlı okuma, polling değil?",
+        aciklama:
+          "Sürekli yoklama döngüsü mikrodenetleyicinin işlemcisini boşuna meşgul ediyor ve iki yoklama arasına düşen anlık sinyaller kaçıyor. Donanım kesmeleri ve zamanlayıcı tabanlı periyodik okumaya geçince işlemci boşta kalabildi ve sinyaller sıfır kayıpla yakalandı.",
+      },
+      {
+        baslik: "Neden HAL/LL seviyesinde kod?",
+        aciklama:
+          "Hazır kütüphaneler hızlı sonuç verir ama donanımın gerçekte ne yaptığını gizler. Register seviyesine inmek, zamanlama ve güç davranışını doğrudan kontrol etmeyi ve sorunları tahmin yerine ölçerek çözmeyi mümkün kıldı.",
+      },
     ],
   },
 
   "gercek-zamanli-backend": {
     ad: "Gerçek Zamanlı Backend Servisleri",
     ozet:
-      "Çoklu istemci desteği sunan, çift yönlü soket haberleşmesi ve asenkron veri akışını yöneten mikroservis mimarili backend altyapısı.",
+      "Çift yönlü soket haberleşmesi ve olay tabanlı veri akışı üzerine kurulu, eşzamanlı çok sayıda istemciyi yöneten mikroservis mimarili backend altyapısı.",
     vurgular: [
-      "WebSockets ve Flask-SocketIO ile düşük gecikmeli, olay güdümlü anlık veri iletimi.",
+      "Python ve Node.js tarafında olay tabanlı, çift yönlü soket mimarileri.",
+      "WebSockets ve Flask-SocketIO ile düşük gecikmeli anlık veri iletimi.",
       "FastAPI ve Pydantic ile tip güvenli, otomatik dokümante edilen REST uç noktaları.",
-      "Tailscale entegrasyonuyla yerel ve uzak cihazlar arasında şifreli servis haberleşmesi.",
+      "PostgreSQL ve MySQL bağlantılarının ve oturum yönetiminin merkezi kurgusu.",
+    ],
+    rol: "Backend ve sistem mimarisi",
+    problem:
+      "Klasik REST mimarisinde istemcinin veriyi almak için sürekli istek atması gerekiyor. Bu, sunucu kaynaklarını gereksiz yere tüketiyor ve anlık veri gerektiren sistemlerde hem yüksek gecikmeye hem de istemciler arasında veri tutarsızlığına yol açıyor.",
+    cozum:
+      "Python tarafında Flask-SocketIO ve FastAPI, Node.js tarafında Express ve WebSockets kullanarak çift yönlü, olay tabanlı soket mimarileri kurdum. Veri değiştiğinde sunucu istemciye kendisi haber veriyor; istemcinin sorması gerekmiyor. Arka planda PostgreSQL ve MySQL bağlantılarını ve oturum yönetimini merkezi biçimde kurguladım.",
+    sonuc:
+      "İstemciler arasında veri iletim süresini milisaniyeler seviyesine indiren, sunucu yükünü düşüren ve eşzamanlı bağlantıları hatasız yöneten ölçeklenebilir servisler hayata geçti.",
+    neden: [
+      {
+        baslik: "Neden WebSockets, HTTP long polling değil?",
+        aciklama:
+          "Long polling her istekte HTTP başlıklarını yeniden taşıyor ve bağlantıyı sürekli kurup kapatıyor. Kalıcı soket bağlantısında bu yük tamamen ortadan kalkıyor; hem bant genişliği hem yanıt süresi minimuma iniyor.",
+      },
+      {
+        baslik: "Neden hem Python hem Node.js?",
+        aciklama:
+          "Farklı servislerin farklı ihtiyaçları vardı. Veri işleme ve tip güvenliği gereken uçlarda FastAPI ve Pydantic, yoğun eşzamanlı bağlantı yönetiminde Node.js ve Express daha iyi sonuç verdi. Tek dile zorlamak yerine her servisi kendi işine uygun araçla yazdım.",
+      },
     ],
   },
 
   "resnet-vgg-kiyaslama": {
     ad: "ResNet50 & VGG19 Model Kıyaslama",
     ozet:
-      "Klasik konvolüsyonel mimarileri transfer learning yöntemiyle özel bir veri kümesinde eğiten, doğruluk ve çıkarım hızı kıyaslaması yapan analitik çalışma.",
+      "İki klasik konvolüsyonel mimariyi aynı veri kümesinde transfer learning ile eğitip doğruluk, çıkarım süresi ve model boyutu ekseninde karşılaştıran analitik çalışma.",
     vurgular: [
+      "Transfer learning ile önceden eğitilmiş ResNet50 ve VGG19 modellerinin aynı veri kümesinde optimize edilmesi.",
       "Katman bazlı ağırlık dondurma ve özel sınıflandırma katmanlarıyla fine-tuning stratejileri.",
-      "Precision, recall ve F1-score metrikleri üzerinden mimari performans karşılaştırması.",
-      "CUDA hızlandırmasıyla optimize edilmiş eğitim döngüleri.",
+      "Loss/accuracy eğrileri, confusion matrix ve çıkarım gecikmesi metriklerini görselleştiren karşılaştırma betikleri.",
+      "Precision, recall ve F1-score üzerinden mimari performans karşılaştırması.",
+    ],
+    rol: "Veri bilimi ve model değerlendirme",
+    problem:
+      "Belirli bir görüntü sınıflandırma probleminde hangi konvolüsyonel mimarinin doğruluk, çıkarım süresi, model boyutu ve aşırı öğrenme dengesinde daha verimli olduğu bilinmiyordu. Karar sezgiye değil ölçüme dayanmalıydı.",
+    cozum:
+      "Transfer learning prensiplerini uygulayarak önceden eğitilmiş ResNet50 ve VGG19 modellerini aynı veri kümesi üzerinde optimize ettim. Katman bazlı ağırlık dondurma ve özel sınıflandırma katmanlarıyla fine-tuning yaptım. Matplotlib ve Seaborn kullanarak loss/accuracy eğrilerini, confusion matrix'i ve çıkarım gecikmesi metriklerini görselleştiren karşılaştırma betikleri geliştirdim.",
+    sonuc:
+      "İki mimarinin güçlü ve zayıf yönlerini istatistiksel olarak ortaya koyan, ileride uç birim dağıtımlarında donanım ve model seçimine dayanak sağlayan kapsamlı bir analiz çıktısı elde edildi.",
+    neden: [
+      {
+        baslik: "Neden ResNet'in artık bağlantıları kritik?",
+        aciklama:
+          "VGG gibi düz derin mimarilerde katman sayısı arttıkça gradyanlar kayboluyor ve model daha derin olmasına rağmen daha kötü öğreniyor. ResNet'in skip connection yapısı bu sorunu çözüyor; ölçümler daha az parametreyle daha yüksek doğruluk ve hız verdiğini deneysel olarak gösterdi.",
+      },
+      {
+        baslik: "Neden transfer learning?",
+        aciklama:
+          "İki mimariyi sıfırdan eğitmek hem çok daha uzun sürerdi hem de veri kümesinin boyutu buna elverişli değildi. Önceden eğitilmiş ağırlıklardan başlayıp son katmanları uyarlamak, karşılaştırmayı adil ve tekrarlanabilir kıldı.",
+      },
     ],
   },
 
@@ -313,11 +456,31 @@ export const projelerTr: ProjeMetinleri = {
   "2d-buyucu-savasi": {
     ad: "2D Büyücü Savaşı & Masaüstü Simülasyonlar",
     ozet:
-      "Nesne yönelimli programlama prensipleri, oyun döngüsü mantığı ve algoritma analizi üzerine kurulu iki oyun/simülasyon projesi.",
+      "Nesne yönelimli programlama prensipleri, özel bir oyun döngüsü ve fizik motoru üzerine sıfırdan kurulmuş iki masaüstü oyun ve simülasyon projesi.",
     vurgular: [
-      "Kalıtım, polimorfizm ve kapsülleme ile karakter mekanikleri, mermi fizikleri ve can/enerji sistemleri.",
-      "Çarpışma algılama ve klavye girdilerine dayalı gerçek zamanlı oyun döngüsü.",
-      "Dinamik matris yönetimi ve yol izleme algoritmaları.",
+      "Kalıtım, polimorfizm ve kapsülleme merkezli modüler oyun motoru yapısı.",
+      "Sıfırdan yazılmış AABB çarpışma algılama, mermi mekaniği ve can/enerji yönetimi.",
+      "Dinamik grid ve mayın tarlası üzerinde yol bulma algoritmaları.",
+      "İki oyuncunun klavyeyle eşzamanlı oynayabildiği, akıcı kare oranına sahip oyun döngüsü.",
+    ],
+    rol: "Bağımsız geliştirici — oyun döngüsü, fizik ve arayüz",
+    problem:
+      "Nesne yönelimli programlama prensiplerini, çarpışma ve fizik algoritmalarını ve dinamik yol bulma mantığını masaüstü bir arayüz ortamında, kare düşüşü yaşamadan simüle etmek gerekiyordu.",
+    cozum:
+      "Java ve Swing ortamında kalıtım, polimorfizm ve kapsülleme merkezli modüler bir oyun motoru yapısı kurdum. AABB çarpışma algılama, mermi mekaniği, can barı ve durum yönetimini sıfırdan geliştirdim; ayrıca dinamik grid ve mayın tarlası üzerinde yol bulma algoritmaları yazdım.",
+    sonuc:
+      "İki oyuncunun klavye kontrolleriyle eşzamanlı rekabet edebildiği, bellek sızıntısı olmayan ve akıcı kare oranına sahip masaüstü uygulamalar ve simülasyonlar tamamlandı.",
+    neden: [
+      {
+        baslik: "Neden hazır oyun motoru kullanılmadı?",
+        aciklama:
+          "Amaç bir oyun yayımlamak değil, oyun döngüsünün ve fizik hesaplarının nasıl çalıştığını doğrudan yazarak öğrenmekti. Hazır bir motor bu katmanı gizler. Graphics2D üzerinde sabit adımlı kendi döngümü yazmak, iş parçacığı yönetimini ve zamanlama mantığını doğrudan görmemi sağladı.",
+      },
+      {
+        baslik: "Neden sabit adımlı güncelleme?",
+        aciklama:
+          "Kare hızına bağlı güncelleme, hızlı ve yavaş makinelerde farklı fizik davranışı üretiyor. Sabit adımlı döngüde fizik her makinede aynı sonucu veriyor; çizim hızı ayrı, hesap hızı ayrı ilerliyor.",
+      },
     ],
   },
 };

@@ -1,7 +1,7 @@
 /* ============================================
    PROJE YAPISI
    Burada SADECE dile bağlı olmayan bilgiler var:
-   sıra, slug, kategori, teknolojiler, linkler.
+   sıra, slug, kategori, teknolojiler, yıl, linkler.
 
    Metinler (ad, özet, vurgular, problem/çözüm/sonuç)
    i18n/projeler/<dil>.ts dosyalarında.
@@ -44,6 +44,7 @@ export const projects: Project[] = [
     slug: "rhinoai",
     kategori: "Mobil",
     stack: ["Kotlin", "Jetpack Compose", "Python", "TensorFlow Lite", "ML Kit", "ViT"],
+    yil: "2026",
     github: "https://github.com/denizkilinc2/RhinoAI",
   },
   {
@@ -51,20 +52,23 @@ export const projects: Project[] = [
     slug: "otonom-insansiz-kara-araci",
     kategori: "Gömülü & Robotik",
     stack: ["Python", "C++", "ROS2", "YOLOv8", "Jetson Orin Nano", "CUDA", "OpenCV"],
+    yil: "2025 – 2026",
   },
   {
     no: "03",
     slug: "time-to-work",
     kategori: "Web",
     stack: ["TypeScript", "Next.js", "React", "Tailwind CSS", "Framer Motion", "i18n"],
+    yil: "2026",
     github: "https://github.com/denizkilinc2/timotowork-web",
     demo: "https://www.ttw-international.nl/",
   },
   {
     no: "04",
     slug: "focuspulse",
-    kategori: "Yapay Zekâ",
-    stack: ["Python", "OpenCV", "MediaPipe", "ML Kit", "TensorFlow Lite"],
+    kategori: "Mobil",
+    stack: ["Kotlin", "Android", "ML Kit", "TensorFlow Lite", "Python", "OpenCV"],
+    yil: "2026",
     github: "https://github.com/denizkilinc2/FocusPulse",
   },
   {
@@ -86,6 +90,7 @@ export const projects: Project[] = [
     slug: "vit-bigru-pipeline",
     kategori: "Yapay Zekâ",
     stack: ["Python", "PyTorch", "TensorFlow", "NumPy", "Pandas", "Seaborn", "CUDA"],
+    yil: "2026",
   },
   {
     no: "08",
@@ -105,19 +110,30 @@ export const projects: Project[] = [
     no: "10",
     slug: "stm32-arduino-gomulu",
     kategori: "Gömülü & Robotik",
-    stack: ["C", "C++", "STM32", "ARM Cortex-M", "Arduino", "UART/SPI/I2C"],
+    stack: ["C", "C++", "STM32", "ARM Cortex-M", "Arduino", "I2C/SPI/UART"],
+    yil: "2025 – 2026",
   },
   {
     no: "11",
     slug: "gercek-zamanli-backend",
     kategori: "Web",
-    stack: ["Python", "FastAPI", "Flask", "Socket.IO", "WebSockets", "PostgreSQL", "Tailscale"],
+    stack: [
+      "Python",
+      "FastAPI",
+      "Flask-SocketIO",
+      "Node.js",
+      "Express",
+      "WebSockets",
+      "PostgreSQL",
+    ],
+    yil: "2026",
   },
   {
     no: "12",
     slug: "resnet-vgg-kiyaslama",
     kategori: "Yapay Zekâ",
     stack: ["Python", "TensorFlow", "Keras", "CUDA", "Matplotlib", "Seaborn"],
+    yil: "2026",
   },
   {
     no: "13",
@@ -148,7 +164,8 @@ export const projects: Project[] = [
     no: "17",
     slug: "2d-buyucu-savasi",
     kategori: "Oyun & Araçlar",
-    stack: ["Java", "Swing/AWT", "C#", "OOP", "NetBeans"],
+    stack: ["Java", "Swing", "Graphics2D", "C#", "OOP", "NetBeans"],
+    yil: "2025 – 2026",
   },
 ];
 

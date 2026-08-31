@@ -5,20 +5,27 @@ export const projelerEn: KismiProjeMetinleri = {
   rhinoai: {
     ad: "RhinoAI",
     ozet:
-      "A mobile AI application that performs rhinoplasty and facial proportion analysis from a user's photo. Face landmark detection and deep learning inference run in real time, entirely on the device.",
+      "A mobile AI application that objectively measures facial proportions before and after rhinoplasty. Face landmark detection and deep learning inference run in real time, entirely on the device.",
     vurgular: [
       "Detection of 468 facial reference points via ML Kit Face Mesh, with asymmetry calculations.",
+      "Live analysis of nasolabial and dorsal angles at 30+ FPS on the camera stream.",
       "Low-latency on-device inference using models optimised and converted to TFLite.",
       "Modern, reactive Android architecture built on MVVM and Jetpack Compose.",
+      "Released as open source on GitHub.",
     ],
-    rol: "End-to-end development",
+    rol: "Solo developer — mobile and edge AI",
     problem:
-      "Facial proportion analysis before rhinoplasty normally requires an expert measurement in a clinical setting — something a person cannot do on their own. Existing mobile solutions upload the photo to a server, which creates a privacy problem and makes the app dependent on an internet connection.",
+      "Surgical planning and asymmetry assessment before and after rhinoplasty rely largely on the surgeon's subjective observation. There was no lightweight mobile tool showing a patient their angular and millimetric ratios in the moment. Existing mobile solutions upload the photo to a server, which creates a privacy problem and makes the app dependent on an internet connection.",
     cozum:
-      "I built an Android application that runs both face landmark detection and deep learning inference entirely on the device. ML Kit Face Mesh detects 468 reference points, from which facial ratios and asymmetry values are calculated. The heavier classification models were converted to TensorFlow Lite and shrunk through quantisation.",
+      "I built a native Android architecture on Kotlin and Jetpack Compose. ML Kit Face Mesh integration maps facial landmarks within milliseconds, and TensorFlow Lite models run directly on the device for image analysis and nasal angle calculations. The heavier classification models were converted to TFLite and shrunk through quantisation.",
     sonuc:
-      "The photo never leaves the device, the analysis works without an internet connection, and server costs are zero.",
+      "The result is an application running fully locally at zero server cost, analysing facial contours and nasolabial/dorsal angles at 30+ FPS on the live camera stream. It was released as open source.",
     neden: [
+      {
+        baslik: "Why on-device inference?",
+        aciklama:
+          "Rather than sending the camera stream to a Python FastAPI backend, I chose to run everything on the device. In a health-related application, the photo never leaving the phone is a stronger privacy guarantee than any measure that could be taken server-side. The same decision also brought zero latency and independence from network connectivity.",
+      },
       {
         baslik: "Why TensorFlow Lite?",
         aciklama:
@@ -38,17 +45,23 @@ export const projelerEn: KismiProjeMetinleri = {
       "An embedded systems project developed within a technology development society, combining real-time object detection, obstacle avoidance and autonomous driving algorithms.",
     vurgular: [
       "High-FPS object and obstacle detection with CUDA-accelerated YOLOv8 on a Jetson Orin Nano.",
-      "Low-latency communication architecture for sensor and camera data across ROS2 nodes.",
-      "Route optimisation and autonomous navigation under dynamic environmental conditions.",
+      "Distributed ROS2 node architecture separating the sensing, decision and motion layers.",
+      "Low-latency delivery of detected object positions to the motor driver control algorithms.",
+      "Dynamic route correction, field-tested on demanding terrain.",
     ],
-    rol: "Computer vision and autonomous driving software",
+    rol: "Autonomous algorithms and embedded computer vision",
     problem:
-      "For an autonomous ground vehicle, seeing an obstacle is not enough — the decision has to be made before impact. The real challenge was running high-frame-rate object detection on a power-constrained embedded board and delivering that data to motion control without delay.",
+      "On rough terrain and in fields containing obstacles, the vehicle had to perceive its environment in real time, avoid obstacles and follow a target route without human intervention. The real difficulty: seeing an obstacle isn't enough — the decision has to be made before impact, and on a power-constrained embedded board at that.",
     cozum:
-      "I structured perception, decision and motion as separate ROS2 nodes, with communication running over low-latency message channels. The YOLOv8 model runs on a Jetson Orin Nano with CUDA acceleration, and the position of detected objects feeds into a navigation node that performs dynamic route optimisation.",
+      "I built a distributed ROS2 node architecture in which the sensing, decision and motion layers run as independent nodes communicating over low-latency message channels. I optimised the YOLOv8 model with CUDA acceleration on a Jetson Orin Nano to build the detection pipeline; the positions of detected objects feed directly into the motor driver control algorithms.",
     sonuc:
-      "The vehicle navigates autonomously in environments containing previously undefined obstacles, recalculating its route in real time.",
+      "The outcome is a working autonomous ground vehicle platform with real-time obstacle detection and dynamic route correction, field-tested on demanding courses.",
     neden: [
+      {
+        baslik: "Why CUDA-accelerated YOLOv8?",
+        aciklama:
+          "Lightweight CPU models such as MobileNet would have consumed less power, but lost accuracy on the small and complex obstacles found in the field. Hardware acceleration on the Jetson made it possible to reach high FPS without sacrificing accuracy.",
+      },
       {
         baslik: "Why ROS2?",
         aciklama:
@@ -65,23 +78,73 @@ export const projelerEn: KismiProjeMetinleri = {
   "time-to-work": {
     ad: "Time to Work International B.V.",
     ozet:
-      "A high-performance, multilingual corporate web platform built for a Netherlands-based company providing international employment and consultancy services.",
+      "A multilingual, SEO-focused corporate web platform built from scratch for a Netherlands-based company providing international workforce and employment services.",
     vurgular: [
-      "Strong SEO and fast loading through the Next.js App Router and SSR/SSG architecture.",
-      "Fluid micro-interactions and a corporate design language built with Framer Motion.",
-      "Multilingual content management via i18n and a fully responsive interface architecture.",
+      "Modular architecture on the Next.js App Router, combining SSR and static generation.",
+      "Dynamic multilingual (i18n) structure with no performance penalty.",
+      "Fluid interface interactions and a corporate design language built with Framer Motion.",
+      "Responsive application flow working smoothly across all devices.",
     ],
-    rol: "End-to-end development",
+    rol: "Frontend architecture, localisation and deployment",
+    problem:
+      "The company's existing web infrastructure was slow, fell short of responsive standards and handled its multilingual support clumsily. As the digital face of a company serving international candidates and businesses, it also failed to convey the corporate identity.",
+    cozum:
+      "I built a modular, SEO-focused architecture on the Next.js App Router, TypeScript and Tailwind CSS. I integrated Framer Motion for interface interactions, and designed the multilingual structure so that every language gets its own generated page without any performance cost.",
+    sonuc:
+      "The corporate platform went live and now runs at ttw-international.nl, letting international candidates and companies apply comfortably from any device.",
+    neden: [
+      {
+        baslik: "Why Next.js SSR/SSG rather than a classic React SPA?",
+        aciklama:
+          "For an international employment company, search traffic translates directly into business. In a single-page React application the content is rendered in the browser and appears late to search engines. Server-side rendering and static pages maximised both indexing and first-load performance.",
+      },
+      {
+        baslik: "Why dynamic i18n?",
+        aciklama:
+          "Multilingual sites usually either split every language into its own codebase or ship all translations to the client. The first makes maintenance impossible, the second inflates page weight. I built a structure where each page carries only the copy for its own language.",
+      },
+      {
+        baslik: "Why Tailwind?",
+        aciklama:
+          "The design had to follow the company's identity, and a ready-made component library would have meant fighting that identity on every screen. Tailwind provided a consistent scale and colour system while the design was built from scratch.",
+      },
+    ],
   },
 
   focuspulse: {
     ad: "FocusPulse",
     ozet:
-      "A privacy-first tracking system that analyses a person's attention and focus during work through camera data. All processing happens locally on the device.",
+      "An Android application that analyses attention and focus during work sessions through camera data. All processing happens on the device; the image never leaves it.",
     vurgular: [
       "Distraction detection through blink frequency, head pose estimation and gaze direction tracking.",
-      "Full local processing without sending data to any server, giving both privacy and low latency.",
-      "Focus scores and statistical reporting generated per working period.",
+      "On-device image processing architecture computing a live distraction index.",
+      "Low-latency inference using models converted to the TFLite format.",
+      "Dynamic break suggestions and alert feedback.",
+      "Data is processed entirely locally, never reaching any server.",
+    ],
+    rol: "Solo developer — Android and edge AI",
+    problem:
+      "Loss of focus and fatigue during remote work and long sessions cannot be tracked objectively. Most existing solutions send the camera feed to the cloud — asking the user to give up their privacy in order to be monitored.",
+    cozum:
+      "I developed an Android application that analyses blink frequency, head pose and gaze direction entirely on the device. I prototyped the model side in Python and OpenCV, then converted it to TFLite; the app runs those lightweight models locally. The signals are turned into a live distraction index, which drives dynamic break suggestions.",
+    sonuc:
+      "The result is a working Android application that never lets the user's image leave the device, computes a live focus index and produces break feedback.",
+    neden: [
+      {
+        baslik: "Why on-device inference instead of the cloud?",
+        aciklama:
+          "Cloud-based vision APIs offer stronger models but contradict the purpose of the system: in an application that watches someone continuously while they work, sending the image to the cloud is unacceptable. Lightweight on-device inference removed that problem entirely and eliminated network dependency.",
+      },
+      {
+        baslik: "Why was the model built in Python but the app in Kotlin?",
+        aciklama:
+          "For model experimentation and validation, the Python ecosystem is incomparably faster. But the final product was going to be an Android application; converting the model to TFLite and running it from Kotlin gave native performance without slowing development.",
+      },
+      {
+        baslik: "Why behavioural signals instead of direct classification?",
+        aciklama:
+          "Rather than a single \"focused / distracted\" classification, I chose to measure separate signals — blinking, head pose, gaze direction — and derive an index from them. That kept the result explainable: the user can see why they were alerted.",
+      },
     ],
   },
 
@@ -111,11 +174,31 @@ export const projelerEn: KismiProjeMetinleri = {
   "vit-bigru-pipeline": {
     ad: "Hybrid ViT-BiGRU Pipeline",
     ozet:
-      "A hybrid deep learning model combining a Vision Transformer for spatial feature extraction with Bi-directional GRU networks for capturing temporal patterns.",
+      "A hybrid deep learning pipeline capturing spatial features with a Vision Transformer and temporal patterns with bidirectional GRU networks.",
     vurgular: [
-      "Self-attention based feature extraction with ViT, sequence modelling through BiGRU layers.",
+      "ViT blocks as the spatial feature extractor, feeding their vectors into BiGRU layers.",
+      "CUDA-accelerated training and validation loops on PyTorch and TensorFlow.",
       "Data preprocessing, augmentation and regularisation techniques to prevent overfitting.",
       "Visualisation of confusion matrices, ROC curves and training metrics.",
+    ],
+    rol: "Deep learning researcher and model developer",
+    problem:
+      "Purely convolutional or purely recurrent architectures cannot capture two things at once in sequential visual data: the spatial detail within a frame and the long-range temporal context across frames. Strengthening one weakens the other.",
+    cozum:
+      "I coded a hybrid pipeline in which Vision Transformer blocks act as the spatial feature extractor and their output vectors feed into bidirectional BiGRU layers. I set up CUDA-accelerated training and validation loops on Python, PyTorch and TensorFlow, and visualised the results through confusion matrices, ROC curves and training metrics.",
+    sonuc:
+      "The outcome is a model architecture suited to both academic and practical use, delivering a measurable increase in accuracy and F1-score on complex temporal datasets compared to standard CNN-LSTM models.",
+    neden: [
+      {
+        baslik: "Why BiGRU instead of LSTM?",
+        aciklama:
+          "GRU runs on fewer parameters than LSTM, which significantly reduced training time and memory consumption. Because the structure is bidirectional, the model still sees both past and future context — so what was saved in parameters wasn't lost in performance.",
+      },
+      {
+        baslik: "Why ViT instead of a CNN?",
+        aciklama:
+          "Convolutional layers capture local patterns well but struggle to relate distant regions of a frame. The self-attention structure of a Vision Transformer evaluates relationships across the whole frame in one step, feeding a richer feature vector into the sequence model.",
+      },
     ],
   },
 
@@ -206,33 +289,93 @@ export const projelerEn: KismiProjeMetinleri = {
   "stm32-arduino-gomulu": {
     ad: "STM32 & Arduino Embedded Systems",
     ozet:
-      "Low-level embedded software developed as part of hardware work at Turuncu Bilişim, covering sensor integration, data processing and peripheral control.",
+      "Low-level embedded software built around synchronous sensor data collection, low-latency output to local displays and a reliable communication standard between microcontrollers.",
     vurgular: [
-      "Reading and processing analogue and digital sensor data over I2C, SPI and UART protocols.",
-      "Precise hardware control using interrupts, timers and PWM signals.",
+      "Register- and driver-level coding on STM32 using the HAL/LL libraries.",
+      "Communication drivers for SSD1306 OLED displays and sensor modules over I2C, SPI and UART.",
+      "Real-time reading architecture managed by interrupts and timers, immune to lock-ups.",
       "Memory and code optimisation for low power consumption and real-time response times.",
+    ],
+    rol: "Embedded software developer",
+    problem:
+      "At the hardware level, sensor data such as temperature, acceleration and distance had to be collected synchronously, written to local displays with low latency, and a reliable communication standard had to be established between microcontrollers.",
+    cozum:
+      "Using C and C++, I wrote register- and driver-level code on STM32 with the HAL/LL libraries and on the Arduino Uno. I developed communication drivers for SSD1306 OLED displays and various sensor modules over I2C, SPI and UART, and built the reading loop on interrupts and timers.",
+    sonuc:
+      "The result was a set of stable hardware prototypes, free of lock-ups, managed by interrupts and capable of real-time data reading and visualisation.",
+    neden: [
+      {
+        baslik: "Why interrupt-driven reading instead of polling?",
+        aciklama:
+          "A continuous polling loop keeps the microcontroller's CPU busy for nothing, and any signal falling between two polls is lost. Moving to hardware interrupts and timer-based periodic reads freed the CPU and captured signals with zero loss.",
+      },
+      {
+        baslik: "Why code at the HAL/LL level?",
+        aciklama:
+          "Ready-made libraries produce quick results but hide what the hardware is actually doing. Working down at register level made timing and power behaviour directly controllable, and let problems be solved by measurement rather than guesswork.",
+      },
     ],
   },
 
   "gercek-zamanli-backend": {
     ad: "Real-Time Backend Services",
     ozet:
-      "A microservice-based backend infrastructure supporting multiple concurrent clients, managing bidirectional socket communication and asynchronous data flow.",
+      "A microservice-based backend infrastructure built on bidirectional socket communication and event-driven data flow, managing many concurrent clients.",
     vurgular: [
-      "Low-latency, event-driven live data delivery through WebSockets and Flask-SocketIO.",
+      "Event-driven, bidirectional socket architectures on both Python and Node.js.",
+      "Low-latency live data delivery through WebSockets and Flask-SocketIO.",
       "Type-safe, automatically documented REST endpoints built with FastAPI and Pydantic.",
-      "Encrypted service communication between local and remote devices via Tailscale integration.",
+      "Centralised setup of PostgreSQL and MySQL connections and session management.",
+    ],
+    rol: "Backend and systems architecture",
+    problem:
+      "In a classic REST architecture the client has to keep asking the server for data. This consumes server resources for nothing and, in systems that need live data, causes both high latency and inconsistency between clients.",
+    cozum:
+      "I built bidirectional, event-driven socket architectures using Flask-SocketIO and FastAPI on the Python side and Express with WebSockets on the Node.js side. When data changes, the server notifies the client itself — the client doesn't have to ask. Behind that I set up PostgreSQL and MySQL connections and session management centrally.",
+    sonuc:
+      "The result is a set of scalable services that cut data delivery between clients down to milliseconds, reduced server load and handled concurrent connections without errors.",
+    neden: [
+      {
+        baslik: "Why WebSockets rather than HTTP long polling?",
+        aciklama:
+          "Long polling carries the HTTP headers again on every request and constantly opens and closes the connection. A persistent socket removes that overhead entirely, minimising both bandwidth and response time.",
+      },
+      {
+        baslik: "Why both Python and Node.js?",
+        aciklama:
+          "Different services had different needs. FastAPI and Pydantic worked better where data processing and type safety mattered; Node.js and Express handled heavy concurrent connection management better. Rather than forcing a single language, I wrote each service in the tool that suited its job.",
+      },
     ],
   },
 
   "resnet-vgg-kiyaslama": {
     ad: "ResNet50 & VGG19 Model Comparison",
     ozet:
-      "An analytical study training classic convolutional architectures on a custom dataset through transfer learning, then benchmarking their accuracy and inference speed.",
+      "An analytical study training two classic convolutional architectures on the same dataset through transfer learning, then comparing them on accuracy, inference time and model size.",
     vurgular: [
+      "Optimising pretrained ResNet50 and VGG19 models on the same dataset through transfer learning.",
       "Fine-tuning strategies with layer-wise weight freezing and custom classification heads.",
-      "Architecture performance comparison across precision, recall and F1-score metrics.",
-      "Training loops optimised with CUDA acceleration.",
+      "Comparison scripts visualising loss/accuracy curves, confusion matrices and inference latency.",
+      "Architecture performance comparison across precision, recall and F1-score.",
+    ],
+    rol: "Data science and model evaluation",
+    problem:
+      "For a specific image classification problem, it was unknown which convolutional architecture struck the better balance across accuracy, inference time, model size and overfitting. The decision had to rest on measurement rather than intuition.",
+    cozum:
+      "Applying transfer learning principles, I optimised pretrained ResNet50 and VGG19 models on the same dataset, fine-tuning them with layer-wise weight freezing and custom classification heads. Using Matplotlib and Seaborn I built comparison scripts visualising loss/accuracy curves, the confusion matrix and inference latency metrics.",
+    sonuc:
+      "The outcome is a thorough analysis laying out the strengths and weaknesses of both architectures statistically, providing a basis for hardware and model selection in future edge deployments.",
+    neden: [
+      {
+        baslik: "Why do ResNet's residual connections matter?",
+        aciklama:
+          "In flat deep architectures like VGG, gradients vanish as layers are added, so the model learns worse despite being deeper. ResNet's skip connections solve this; the measurements experimentally showed higher accuracy and speed with fewer parameters.",
+      },
+      {
+        baslik: "Why transfer learning?",
+        aciklama:
+          "Training both architectures from scratch would have taken far longer, and the dataset size wasn't suited to it. Starting from pretrained weights and adapting the final layers kept the comparison fair and reproducible.",
+      },
     ],
   },
 
@@ -314,11 +457,31 @@ export const projelerEn: KismiProjeMetinleri = {
   "2d-buyucu-savasi": {
     ad: "2D Wizard Battle & Desktop Simulations",
     ozet:
-      "Two game and simulation projects built around object-oriented programming principles, game loop logic and algorithm analysis.",
+      "Two desktop game and simulation projects built from scratch on object-oriented principles, a custom game loop and a hand-written physics engine.",
     vurgular: [
-      "Character mechanics, projectile physics and health/energy systems built with inheritance, polymorphism and encapsulation.",
-      "A real-time game loop driven by collision detection and keyboard input.",
-      "Dynamic matrix management and pathfinding algorithms.",
+      "Modular game engine structure centred on inheritance, polymorphism and encapsulation.",
+      "AABB collision detection, projectile mechanics and health/energy management written from scratch.",
+      "Pathfinding algorithms over a dynamic grid and minefield.",
+      "A game loop with smooth framerate letting two players compete simultaneously on the keyboard.",
+    ],
+    rol: "Independent developer — game loop, physics and interface",
+    problem:
+      "Object-oriented programming principles, collision and physics algorithms and dynamic pathfinding logic had to be simulated in a desktop interface environment without dropping frames.",
+    cozum:
+      "In Java and Swing I built a modular game engine structure centred on inheritance, polymorphism and encapsulation. I developed AABB collision detection, projectile mechanics, health bars and state management from scratch, along with pathfinding algorithms over a dynamic grid and minefield.",
+    sonuc:
+      "The result was a set of desktop applications and simulations with no memory leaks and a smooth framerate, letting two players compete simultaneously via keyboard controls.",
+    neden: [
+      {
+        baslik: "Why no ready-made game engine?",
+        aciklama:
+          "The goal wasn't to ship a game but to learn how the game loop and physics calculations work by writing them directly. A ready-made engine hides that layer. Writing my own fixed-step loop on Graphics2D meant seeing thread management and timing logic first-hand.",
+      },
+      {
+        baslik: "Why fixed-step updates?",
+        aciklama:
+          "Framerate-dependent updates produce different physics behaviour on fast and slow machines. With a fixed-step loop the physics gives the same result everywhere; rendering speed and simulation speed advance independently.",
+      },
     ],
   },
 };
