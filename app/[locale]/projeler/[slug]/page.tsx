@@ -5,6 +5,7 @@ import Cursor from "@/components/Cursor";
 import ScrollProgress from "@/components/ScrollProgress";
 import CommandPalette from "@/components/CommandPalette";
 import SocialDock from "@/components/SocialDock";
+import PersonSchema from "@/components/PersonSchema";
 import Reveal from "@/components/Reveal";
 import Magnetic from "@/components/Magnetic";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -85,8 +86,34 @@ export default async function ProjeDetay({
     { id: "sonuc", etiket: s.detay.sonuc, baslik: s.detay.sonucBaslik, metin: m.sonuc },
   ].filter((a) => a.metin);
 
+  /* Proje sayfası için CreativeWork şeması —
+     her projeyi ayrı bir eser olarak tanıtır. */
+  const projeSemasi = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: m.ad,
+    description: m.ozet,
+    url: `https://denizkilinc.dev/${locale}/projeler/${slug}`,
+    inLanguage: locale,
+    author: {
+      "@type": "Person",
+      "@id": "https://denizkilinc.dev/#deniz-kilinc",
+      name: "Deniz Kılınç",
+      url: "https://denizkilinc.dev",
+    },
+    keywords: proje.stack.join(", "),
+    ...(proje.yil ? { dateCreated: proje.yil } : {}),
+    ...(proje.demo ? { sameAs: proje.demo } : {}),
+    ...(proje.github ? { codeRepository: proje.github } : {}),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projeSemasi) }}
+      />
+      <PersonSchema dil={locale} />
       <Cursor />
       <ScrollProgress />
       <CommandPalette />

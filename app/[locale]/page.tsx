@@ -3,6 +3,7 @@ import Cursor from "@/components/Cursor";
 import ScrollProgress from "@/components/ScrollProgress";
 import CommandPalette from "@/components/CommandPalette";
 import SocialDock from "@/components/SocialDock";
+import PersonSchema from "@/components/PersonSchema";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
@@ -20,6 +21,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
   return (
     <>
+      <PersonSchema dil={locale} />
       <Cursor />
       <ScrollProgress />
       <CommandPalette />
