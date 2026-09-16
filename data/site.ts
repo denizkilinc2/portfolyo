@@ -14,7 +14,7 @@ export const fotograf = {
 
 export const cv = {
   /* CV hazır olduğunda true yap */
-  hazir: false,
+  hazir: true,
   /* Dosyayı public/medya/ klasörüne koy */
   src: "/medya/deniz-kilinc-cv.pdf",
   /* İndirilirken kullanılacak dosya adı */
