@@ -10,18 +10,15 @@ export default function Portre({ yakindaMetin }: Props) {
       {/* Arkadaki kehribar ışık */}
       <div className="glow absolute left-1/2 top-1/2 h-52 w-52 -translate-x-1/2 -translate-y-1/2" />
 
+      {/* Oran fotoğrafla aynı (4:5) — kırpma olmuyor */}
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-line bg-ink-soft">
         {fotograf.hazir ? (
-          <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={fotograf.src}
-              alt={fotograf.alt}
-              className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
-            />
-            {/* Fotoğrafın altına doğru koyulaşan katman */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/50 to-transparent" />
-          </>
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={fotograf.src}
+            alt={fotograf.alt}
+            className="h-full w-full object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
+          />
         ) : (
           /* --- Yakında hali --- */
           <div className="relative flex h-full w-full flex-col items-center justify-center gap-4 bg-[radial-gradient(ellipse_at_center,var(--ink-card),var(--ink-soft))] px-6 text-center">
