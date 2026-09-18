@@ -6,7 +6,7 @@
 
 export const fotograf = {
   /* Fotoğraf hazır olduğunda true yap */
-  hazir: false,
+  hazir: true,
   /* Dosyayı public/medya/ klasörüne koy, adı bununla aynı olsun */
   src: "/medya/deniz.jpg",
   alt: "Deniz Kılınç",
