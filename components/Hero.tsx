@@ -49,7 +49,7 @@ export default function Hero({ dil, s }: Props) {
       <div className="glow bottom-[-5%] right-[-10%] h-96 w-96 opacity-[0.08]" />
 
       {/* --- İçerik: solda metin, sağda portre --- */}
-      <div className="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_300px] lg:items-center lg:gap-14">
+      <div className="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_290px] lg:items-center lg:gap-16 lg:pr-4">
         {/* ---------- SOL: metin ---------- */}
         <div>
           {/* Kimlik satırı */}

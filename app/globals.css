@@ -571,16 +571,17 @@ body::after {
    14. KÖŞE MONOGRAMI
    Portre hero'ya girdikten sonra monogram
    sağ üste çekildi: daha küçük, daha soluk.
+   Portrenin arkasında kalmaması için yukarıda.
    ============================================ */
 .monogram-kose {
-  right: 4%;
-  top: 22%;
+  right: 2%;
+  top: 8%;
   transform: none;
-  font-size: clamp(7rem, 11vw, 14rem);
+  font-size: clamp(6rem, 9vw, 11rem);
 }
 
 .monogram-kose .monogram-taban {
-  opacity: 0.13;
+  opacity: 0.16;
 }
 
 .monogram-kose .monogram-akim {
