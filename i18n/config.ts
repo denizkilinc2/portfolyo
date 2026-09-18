@@ -10,8 +10,10 @@ export const diller = ["tr", "en", "de", "nl"] as const;
 
 export type Dil = (typeof diller)[number];
 
-/* Adres dilsiz geldiğinde bu dile düşülür */
-export const varsayilanDil: Dil = "tr";
+/* Tarayıcı dili listedekilerden hiçbiriyle eşleşmezse
+   bu dile düşülür. İngilizce, uluslararası ziyaretçiler için
+   Türkçeden çok daha uygun bir karşılama. */
+export const varsayilanDil: Dil = "en";
 
 /* Dil değiştirme menüsünde görünecek bilgiler */
 export type DilBilgi = { ad: string; kisa: string; htmlLang: string; ogLocale: string };
