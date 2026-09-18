@@ -54,13 +54,13 @@ export default function Hero({ dil, s }: Props) {
       <div className="relative mx-auto w-full max-w-6xl">
         {/* Kimlik satırı: portre + isim + müsaitlik */}
         <div className="rise d-1 flex flex-wrap items-center gap-x-5 gap-y-3">
-          <div className="flex items-center gap-3.5">
+          <div className="flex items-center gap-4">
             <Avatar />
             <span className="flex flex-col">
-              <span className="text-[0.95rem] leading-tight text-cream">
+              <span className="text-[1.05rem] leading-tight text-cream">
                 Deniz Kılınç
               </span>
-              <span className="mt-1 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-muted">
+              <span className="mt-1.5 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted">
                 {s.hero.unvan}
               </span>
             </span>

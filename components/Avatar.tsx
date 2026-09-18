@@ -2,7 +2,7 @@ import { fotograf } from "@/data/site";
 
 export default function Avatar() {
   return (
-    <span className="relative flex h-12 w-12 flex-none items-center justify-center overflow-hidden rounded-full border border-line bg-ink-card">
+    <span className="relative flex h-18 w-18 flex-none items-center justify-center overflow-hidden rounded-full border border-line bg-ink-card">
       {fotograf.hazir ? (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
@@ -11,7 +11,7 @@ export default function Avatar() {
           className="h-full w-full object-cover"
         />
       ) : (
-        <span className="font-mono text-[0.8rem] font-bold tracking-tight text-accent">
+        <span className="font-mono text-base font-bold tracking-tight text-accent">
           DK
         </span>
       )}
