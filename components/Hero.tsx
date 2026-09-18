@@ -33,11 +33,11 @@ export default function Hero({ dil, s }: Props) {
   ];
 
   return (
-    <section className="relative flex min-h-dvh items-center overflow-hidden px-6 pb-20 pt-28">
+    <section className="relative flex min-h-dvh items-center overflow-hidden px-6 pb-36 pt-28">
       {/* --- Arka plan katmanları --- */}
       <div className="grid-bg pointer-events-none absolute inset-0 opacity-25" />
 
-      {/* DK monogramı — sağ üstte, küçük ve soluk */}
+      {/* DK monogramı — portrenin üstünde, köşede */}
       <div className="monogram monogram-kose hidden xl:grid" aria-hidden="true">
         <span className="monogram-taban">DK</span>
         <span className="monogram-akim">DK</span>
@@ -49,7 +49,8 @@ export default function Hero({ dil, s }: Props) {
       <div className="glow bottom-[-5%] right-[-10%] h-96 w-96 opacity-[0.08]" />
 
       {/* --- İçerik: solda metin, sağda portre --- */}
-      <div className="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_290px] lg:items-center lg:gap-16 lg:pr-4">
+      {/* items-start ile üstleri hizalanıyor, sütun genişliği dengeli */}
+      <div className="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_300px] lg:items-start lg:gap-14">
         {/* ---------- SOL: metin ---------- */}
         <div>
           {/* Kimlik satırı */}
@@ -122,13 +123,14 @@ export default function Hero({ dil, s }: Props) {
         </div>
 
         {/* ---------- SAĞ: büyük portre ---------- */}
-        <div className="rise d-3 order-first mx-auto w-full max-w-[240px] lg:order-last lg:max-w-none">
+        {/* mt-1 ile "Deniz Kılınç" satırıyla üstü hizalanıyor */}
+        <div className="rise d-3 order-first mx-auto w-full max-w-[240px] lg:order-last lg:mt-1 lg:max-w-none">
           <Portre yakindaMetin={s.hakkimda.fotografYakinda} boyut="buyuk" />
         </div>
       </div>
 
       {/* --- Alan bazlı teknoloji şeridi: tam genişlik, en altta --- */}
-      <div className="rise d-5 absolute inset-x-0 bottom-8 hidden px-6 lg:block">
+      <div className="rise d-5 absolute inset-x-0 bottom-10 hidden px-6 lg:block">
         <div className="mx-auto w-full max-w-6xl">
           <div className="hairline" />
           <dl className="mt-5 grid grid-cols-4 gap-x-8">

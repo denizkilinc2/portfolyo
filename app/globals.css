@@ -122,6 +122,8 @@ html {
   -webkit-text-size-adjust: 100%;
   scrollbar-color: var(--line) var(--ink);
   scrollbar-width: thin;
+  /* Arka plan katmanları asla yatay kaydırma yaratmasın */
+  overflow-x: hidden;
 }
 
 body {
@@ -571,17 +573,19 @@ body::after {
    14. KÖŞE MONOGRAMI
    Portre hero'ya girdikten sonra monogram
    sağ üste çekildi: daha küçük, daha soluk.
-   Portrenin arkasında kalmaması için yukarıda.
+   right yerine left kullanılıyor — sağa yaslama
+   sayfada yatay taşma yaratıyordu.
    ============================================ */
 .monogram-kose {
-  right: 2%;
-  top: 8%;
+  right: auto;
+  left: 74%;
+  top: 14%;
   transform: none;
-  font-size: clamp(6rem, 9vw, 11rem);
+  font-size: clamp(5.5rem, 8vw, 10rem);
 }
 
 .monogram-kose .monogram-taban {
-  opacity: 0.16;
+  opacity: 0.15;
 }
 
 .monogram-kose .monogram-akim {
