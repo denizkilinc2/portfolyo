@@ -570,28 +570,78 @@ body::after {
 }
 
 /* ============================================
-   14. KÖŞE MONOGRAMI
-   Portre hero'ya girdikten sonra monogram
-   sağ üste çekildi: daha küçük, daha soluk.
-   right yerine left kullanılıyor — sağa yaslama
-   sayfada yatay taşma yaratıyordu.
+   14. ROZET MONOGRAMI
+   Menü ve alt bilgideki küçük "DK" rozeti.
+   Büyük monogramın efektleri minyatür ölçekte:
+   ince kontur, kısa gölge, aynı akım ve çarpma.
    ============================================ */
-.monogram-kose {
-  right: auto;
-  left: 74%;
-  top: 14%;
-  transform: none;
-  font-size: clamp(5.5rem, 8vw, 10rem);
+.rozet {
+  position: relative;
+  display: grid;
+  line-height: 1;
 }
 
-.monogram-kose .monogram-taban {
-  opacity: 0.15;
+.rozet > span {
+  grid-area: 1 / 1;
+  color: transparent;
+  white-space: nowrap;
 }
 
-.monogram-kose .monogram-akim {
-  filter: drop-shadow(0 0 10px var(--accent));
+/* Sabit kontur */
+.rozet-taban {
+  -webkit-text-stroke: 0.6px var(--accent);
+  opacity: 0.85;
 }
 
-.monogram-kose .monogram-carpma {
-  filter: drop-shadow(0 0 16px var(--accent));
+/* İçinden gezen akım */
+.rozet-akim {
+  -webkit-text-stroke: 0.6px var(--accent);
+  filter: drop-shadow(0 0 4px var(--accent));
+  mask-image: linear-gradient(
+    118deg,
+    transparent 38%,
+    #000 46%,
+    #000 54%,
+    transparent 62%
+  );
+  -webkit-mask-image: linear-gradient(
+    118deg,
+    transparent 38%,
+    #000 46%,
+    #000 54%,
+    transparent 62%
+  );
+  mask-size: 320% 320%;
+  -webkit-mask-size: 320% 320%;
+  animation: monogram-akim 4s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+
+/* Çarpma parlaması */
+.rozet-carpma {
+  -webkit-text-stroke: 0.6px var(--accent);
+  filter: drop-shadow(0 0 7px var(--accent));
+  opacity: 0;
+  animation: monogram-carpma 4s ease-out infinite;
+}
+
+/* Rozetin kendi çerçevesi de çarpma anında parlasın */
+@keyframes rozet-cerceve {
+  0%,
+  29% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  31% {
+    box-shadow: 0 0 10px -1px var(--accent);
+  }
+  46% {
+    box-shadow: 0 0 4px -2px var(--accent);
+  }
+  60%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.rozet-kutu {
+  animation: rozet-cerceve 4s ease-out infinite;
 }

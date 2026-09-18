@@ -37,12 +37,6 @@ export default function Hero({ dil, s }: Props) {
       {/* --- Arka plan katmanları --- */}
       <div className="grid-bg pointer-events-none absolute inset-0 opacity-25" />
 
-      {/* DK monogramı — portrenin üstünde, köşede */}
-      <div className="monogram monogram-kose hidden xl:grid" aria-hidden="true">
-        <span className="monogram-taban">DK</span>
-        <span className="monogram-akim">DK</span>
-        <span className="monogram-carpma">DK</span>
-      </div>
 
       <ParticleField />
       <div className="glow left-[-15%] top-[10%] h-[30rem] w-[30rem]" />
