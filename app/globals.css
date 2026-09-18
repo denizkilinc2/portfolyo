@@ -566,3 +566,27 @@ body::after {
     opacity: 0.22;
   }
 }
+
+/* ============================================
+   14. KÖŞE MONOGRAMI
+   Portre hero'ya girdikten sonra monogram
+   sağ üste çekildi: daha küçük, daha soluk.
+   ============================================ */
+.monogram-kose {
+  right: 4%;
+  top: 22%;
+  transform: none;
+  font-size: clamp(7rem, 11vw, 14rem);
+}
+
+.monogram-kose .monogram-taban {
+  opacity: 0.13;
+}
+
+.monogram-kose .monogram-akim {
+  filter: drop-shadow(0 0 10px var(--accent));
+}
+
+.monogram-kose .monogram-carpma {
+  filter: drop-shadow(0 0 16px var(--accent));
+}
