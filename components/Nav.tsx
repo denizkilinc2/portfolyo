@@ -71,6 +71,19 @@ export default function Nav({ dil, s }: Props) {
     };
   }, [open]);
 
+  /* Rozete basınca sayfanın en başına dön.
+     Ana sayfadaysak yumuşak kaydırma yapıyoruz;
+     başka sayfadaysak normal yönlendirme çalışsın. */
+  const basaDon = (e: React.MouseEvent) => {
+    const anaSayfada = window.location.pathname === `/${dil}`;
+    if (!anaSayfada) return;
+
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    /* Adres çubuğundaki #bölüm izini de temizle */
+    window.history.replaceState(null, "", `/${dil}`);
+  };
+
   return (
     <>
       <header
@@ -82,7 +95,7 @@ export default function Nav({ dil, s }: Props) {
       >
         <nav className="mx-auto flex h-18 w-full max-w-6xl items-center justify-between px-6">
           {/* Sol: isim */}
-          <Link href={`/${dil}`} className="group flex items-center gap-2.5" aria-label={s.nav.anaSayfa}>
+          <Link href={`/${dil}`} onClick={basaDon} className="group flex items-center gap-2.5" aria-label={s.nav.anaSayfa}>
             <span className="rozet-kutu flex h-8 w-8 items-center justify-center rounded-md border border-line bg-ink-card transition-colors group-hover:border-accent">
               <span className="rozet font-mono text-xs font-bold" aria-hidden="true">
                 <span className="rozet-taban">DK</span>

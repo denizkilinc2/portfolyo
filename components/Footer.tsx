@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import type { Dil } from "@/i18n/config";
 import type { Sozluk } from "@/i18n/tr";
@@ -16,11 +18,19 @@ export default function Footer({ dil, s }: Props) {
     { ad: s.footer.eposta, url: "mailto:xdnz.klnc@gmail.com" },
   ];
 
+  /* Ana sayfadaysak yumuşak kaydırma, değilsek normal yönlendirme */
+  const basaDon = (e: React.MouseEvent) => {
+    if (window.location.pathname !== `/${dil}`) return;
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.history.replaceState(null, "", `/${dil}`);
+  };
+
   return (
     <footer className="border-t border-line px-6 py-12">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 md:flex-row md:justify-between md:gap-6">
         {/* Sol: isim */}
-        <Link href={`/${dil}`} className="group flex items-center gap-2.5" aria-label={s.footer.basaDon}>
+        <Link href={`/${dil}`} onClick={basaDon} className="group flex items-center gap-2.5" aria-label={s.footer.basaDon}>
           <span className="rozet-kutu flex h-8 w-8 items-center justify-center rounded-md border border-line bg-ink-card transition-colors group-hover:border-accent">
             <span className="rozet font-mono text-xs font-bold" aria-hidden="true">
               <span className="rozet-taban">DK</span>
