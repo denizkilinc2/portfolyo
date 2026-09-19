@@ -2,6 +2,54 @@ import type { KismiProjeMetinleri } from "./tipler";
 
 /* Henüz çevrilmemiş projeler Türkçe metne düşer. */
 export const projelerEn: KismiProjeMetinleri = {
+  aventra: {
+    ad: "Aventra — AI Travel Planner",
+    ozet:
+      "The user types where they want to go and gets a day-by-day itinerary in about thirty seconds: real places, timing that respects opening hours, and an estimated budget. An eight-language mobile app, live on Google Play in 177 countries since 6 September 2026.",
+    vurgular: [
+      "A commercial product built end to end and self-hosted: mobile app, API, database, admin panel and marketing site.",
+      "Itinerary generation built on Gemini; every suggested place is verified against Google Places data, and the API key never reaches the phone thanks to a backend proxy.",
+      "Subscription infrastructure across two stores via RevenueCat — purchases are verified by a server webhook, never by the client.",
+      "Quota system built on PlanLimit and UsageRecord, with an HMAC-hashed device identifier preventing multi-account abuse; the raw identifier is never stored.",
+      "Eight-language interface, offline trip access for Premium, and first-party analytics with no ad network or third-party tracker.",
+      "Docker and Caddy on Hetzner, nightly automated backups, and test suites passing 45/45 and 53/53.",
+    ],
+    rol: "End-to-end development, infrastructure and store release",
+    problem:
+      "Planning a trip is scattered work. Researching a destination means bouncing between blogs, map apps, weather sites and booking pages, and you still end up without a coherent schedule. Existing AI itinerary generators have a different problem: not being connected to real place data, they suggest venues that don't exist and ignore opening hours and travel distance entirely. The result looks good on paper but falls apart on the ground.",
+    cozum:
+      "I built the mobile side on React Native and Expo, and the backend on NestJS, Prisma and PostgreSQL. Gemini generates the plan, but every suggested place is verified against Google Places, which also supplies coordinates, opening hours and distances — so the itinerary is made of real, reachable locations. When the trip dates cover today, the home screen shifts entirely into \"travel mode\", surfacing the day's plan, nearby places and expense shortcuts. I set up subscriptions across both stores with RevenueCat, where the entitlement decision comes from a server-side webhook rather than the client. Finally I deployed on Hetzner with Docker and Caddy, with nightly backups and monitoring.",
+    sonuc:
+      "The app is live in production on Google Play across 177 countries. The subscription chain is verified end to end, from store to webhook to database. Deliberate optimisation cut the infrastructure bill from several hundred lira a month to thirty-five, and made it predictable regardless of user count.",
+    neden: [
+      {
+        baslik: "Why route place data through a backend proxy?",
+        aciklama:
+          "Two reasons. Security: an API key shipped inside a mobile bundle can be extracted, and someone else runs up your bill. Cost: Google Places dominated the July invoice at 922 lira. Moving images onto my own server and centralising calls through the proxy brought August down to 34.77 lira, with the Places line absent from the invoice entirely.",
+      },
+      {
+        baslik: "Why verify purchases through a webhook?",
+        aciklama:
+          "A client telling the server \"I bought this\" is the easiest thing in the world to fake. Instead I made the webhook — store to RevenueCat to my own server — the single source of truth. The phone never makes the entitlement decision.",
+      },
+      {
+        baslik: "Why a monthly rather than lifetime generation limit?",
+        aciklama:
+          "The first design gave free users a handful of lifetime itineraries. The outcome was bad: people burned through them on day one, hit a wall and deleted the app. Making the limit renew monthly brought users back without weakening the reason to buy Premium.",
+      },
+      {
+        baslik: "Why no off-the-shelf analytics SDK?",
+        aciklama:
+          "Adding Firebase or similar takes five minutes, but it hands user data to a third party and complicates the store data declaration. I wrote my own event model and funnel endpoints instead. The app contains no ad network and no tracker.",
+      },
+      {
+        baslik: "Why hash the device identifier?",
+        aciklama:
+          "Free allowances had to be protected from users creating unlimited accounts, but storing a raw device identifier means holding a permanent tracking ID. I hash it with a server-side secret: I can recognise the same device without ever holding something reversible.",
+      },
+    ],
+  },
+
   rhinoai: {
     ad: "RhinoAI",
     ozet:

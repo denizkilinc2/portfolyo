@@ -1,6 +1,54 @@
 import type { ProjeMetinleri } from "./tipler";
 
 export const projelerTr: ProjeMetinleri = {
+  aventra: {
+    ad: "Aventra — Yapay Zekâ Destekli Seyahat Planlayıcı",
+    ozet:
+      "Kullanıcı nereye gitmek istediğini yazıyor, otuz saniye içinde gün gün seyahat planı çıkıyor: gerçek yerler, açılış saatlerine uygun zamanlama ve tahmini bütçeyle. Sekiz dilli mobil uygulama, 6 Eylül 2026'dan beri Google Play'de 177 ülkede yayında.",
+    vurgular: [
+      "Mobil uygulama, API, veritabanı, yönetim paneli ve tanıtım sitesiyle uçtan uca kurulmuş, kendi sunucusunda çalışan ticari ürün.",
+      "Gemini üzerine kurulu plan üretimi; önerilen yerler Google Places verisiyle doğrulanıyor, API anahtarı backend proxy sayesinde hiç mobile inmiyor.",
+      "RevenueCat ile iki mağazada abonelik altyapısı — satın alma doğrulaması istemciden değil sunucu webhook'u üzerinden yapılıyor.",
+      "PlanLimit ve UsageRecord ile kota sistemi; HMAC'lenmiş cihaz kimliğiyle çoklu hesap freni, ham kimlik hiç saklanmıyor.",
+      "Sekiz dilli arayüz, Premium için çevrimdışı gezi erişimi, reklam ağı ve üçüncü taraf takipçi olmadan kendi analitiği.",
+      "Hetzner üzerinde Docker ve Caddy, gecelik otomatik yedekleme, 45/45 ve 53/53 geçen test paketleri.",
+    ],
+    rol: "Uçtan uca geliştirme, altyapı ve mağaza yayını",
+    problem:
+      "Seyahat planlamak dağınık bir iş. Kullanıcı bir yeri araştırırken bloglar, harita uygulamaları, hava durumu siteleri ve rezervasyon sayfaları arasında gidip geliyor; sonunda elinde derli toplu bir program kalmıyor. Var olan yapay zekâ plan üreticilerinin sorunu ise farklı: gerçek yer verisine bağlı olmadıkları için var olmayan mekânlar önerebiliyor, açılış saatlerini ve yerler arası mesafeyi hiç hesaba katmıyorlar. Ortaya kâğıt üstünde güzel duran ama sahada uygulanamayan planlar çıkıyor.",
+    cozum:
+      "Mobil tarafı React Native ve Expo, arka ucu NestJS, Prisma ve PostgreSQL üzerine kurdum. Kullanıcı hedefini yazdığında planı Gemini üretiyor, ama önerilen her yer Google Places verisiyle doğrulanıyor ve koordinat, açılış saati ile mesafe bilgisi oradan alınıyor — böylece plan gerçek ve ulaşılabilir yerlerden oluşuyor. Gezi tarihleri bugünü kapsadığında ana sayfa tümüyle \"seyahat moduna\" geçip günün planını, yakındaki yerleri ve harcama kısayollarını öne çıkarıyor. Abonelik altyapısını RevenueCat ile iki mağazaya birden kurdum; yetkilendirme kararını istemci değil, sunucuya gelen webhook veriyor. Ürünü Hetzner'de Docker ve Caddy ile yayına alıp gecelik yedekleme ve izleme kurdum.",
+    sonuc:
+      "Uygulama Google Play'de 177 ülkede üretimde yayında. Abonelik zinciri mağazadan webhook'a, oradan veritabanına kadar uçtan uca doğrulandı. Altyapı maliyeti bilinçli optimizasyonla aylık birkaç yüz liradan otuz beş liraya indi ve kullanıcı sayısından bağımsız öngörülebilir hale geldi.",
+    neden: [
+      {
+        baslik: "Neden yer verisi backend proxy'den geçiyor?",
+        aciklama:
+          "İki sebep vardı. Birincisi güvenlik: API anahtarı mobil pakete konursa çıkarılabilir ve başkası senin faturanı şişirir. İkincisi maliyet: Temmuz faturasında Google Places 922 TL ile baskındı. Görselleri kendi sunucuma taşıyıp çağrıları proxy üzerinden merkezîleştirince Ağustos faturası 34,77 TL'ye indi ve Places kalemi faturada hiç görünmedi.",
+      },
+      {
+        baslik: "Neden satın alma doğrulaması webhook'la?",
+        aciklama:
+          "İstemcinin sunucuya \"ben satın aldım\" demesi en kolay taklit edilen şey. Bunun yerine mağazadan RevenueCat'e, oradan da kendi sunucuma gelen webhook'u tek doğruluk kaynağı yaptım. Yetkilendirme kararını hiçbir zaman telefon vermiyor.",
+      },
+      {
+        baslik: "Neden plan üretimi ömür boyu değil aylık?",
+        aciklama:
+          "İlk tasarımda ücretsiz kullanıcıya ömür boyu birkaç plan hakkı vardı. Sonuç kötüydü: kullanıcı ilk gün hakkını bitirip duvara tosluyor ve uygulamayı siliyordu. Limiti aylık yenilenir hale getirmek kullanıcıyı geri getirdi ve Premium'un satın alma gerekçesini zayıflatmadı.",
+      },
+      {
+        baslik: "Neden hazır analitik SDK'sı yok?",
+        aciklama:
+          "Firebase veya benzeri bir SDK eklemek beş dakikalık iş ama kullanıcı verisini üçüncü tarafa açıyor ve mağaza veri beyanını karmaşıklaştırıyor. Bunun yerine kendi olay modelimi ve huni uçlarımı yazdım. Uygulamada tek bir reklam ağı veya takipçi yok.",
+      },
+      {
+        baslik: "Neden cihaz kimliği HMAC'leniyor?",
+        aciklama:
+          "Ücretsiz hakların sınırsız hesap açılarak sömürülmesini engellemek gerekiyordu, ama cihaz kimliğini ham haliyle saklamak kalıcı bir takip kimliği tutmak demek. Kimliği sunucu tarafındaki bir sırla HMAC'leyip saklıyorum: aynı cihazı tanıyabiliyorum ama elimde geri döndürülebilir bir kimlik yok.",
+      },
+    ],
+  },
+
   rhinoai: {
     ad: "RhinoAI",
     ozet:

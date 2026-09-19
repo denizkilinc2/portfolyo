@@ -2,6 +2,54 @@ import type { KismiProjeMetinleri } from "./tipler";
 
 /* Henüz çevrilmemiş projeler Türkçe metne düşer. */
 export const projelerDe: KismiProjeMetinleri = {
+  aventra: {
+    ad: "Aventra — KI-Reiseplaner",
+    ozet:
+      "Der Nutzer tippt sein Reiseziel ein und erhält in etwa dreißig Sekunden einen Tag-für-Tag-Plan: echte Orte, Zeitplanung nach Öffnungszeiten und ein geschätztes Budget. Eine App in acht Sprachen, seit dem 6. September 2026 in 177 Ländern bei Google Play verfügbar.",
+    vurgular: [
+      "Ein durchgängig selbst gebautes und selbst gehostetes kommerzielles Produkt: mobile App, API, Datenbank, Verwaltungspanel und Marketing-Website.",
+      "Planerstellung auf Basis von Gemini; jeder vorgeschlagene Ort wird gegen Google-Places-Daten geprüft, und der API-Schlüssel erreicht dank Backend-Proxy nie das Telefon.",
+      "Abonnement-Infrastruktur für zwei Stores über RevenueCat — Käufe werden per Server-Webhook verifiziert, nie durch den Client.",
+      "Kontingentsystem auf Basis von PlanLimit und UsageRecord, mit HMAC-gehashter Gerätekennung gegen Mehrfachkonten; die rohe Kennung wird nie gespeichert.",
+      "Oberfläche in acht Sprachen, Offline-Zugriff auf Reisen für Premium, eigene Analytik ohne Werbenetzwerk und ohne Tracker Dritter.",
+      "Docker und Caddy auf Hetzner, nächtliche automatische Backups, Testsuiten mit 45/45 und 53/53 bestanden.",
+    ],
+    rol: "Durchgängige Entwicklung, Infrastruktur und Store-Veröffentlichung",
+    problem:
+      "Eine Reise zu planen ist verstreute Arbeit. Wer ein Ziel recherchiert, springt zwischen Blogs, Karten-Apps, Wetterseiten und Buchungsportalen — und hat am Ende trotzdem keinen zusammenhängenden Ablaufplan. Bestehende KI-Planer haben ein anderes Problem: Weil sie nicht an echte Ortsdaten angebunden sind, schlagen sie Lokale vor, die es nicht gibt, und ignorieren Öffnungszeiten und Entfernungen vollständig. Das Ergebnis sieht auf dem Papier gut aus, scheitert aber vor Ort.",
+    cozum:
+      "Die mobile Seite habe ich auf React Native und Expo aufgebaut, das Backend auf NestJS, Prisma und PostgreSQL. Gemini erzeugt den Plan, doch jeder vorgeschlagene Ort wird gegen Google Places geprüft, das auch Koordinaten, Öffnungszeiten und Entfernungen liefert — so besteht der Plan aus echten, erreichbaren Orten. Fällt das heutige Datum in den Reisezeitraum, wechselt der Startbildschirm vollständig in den „Reisemodus\" und rückt den Tagesplan, Orte in der Nähe und Ausgaben-Shortcuts nach vorn. Die Abonnements habe ich mit RevenueCat für beide Stores eingerichtet, wobei die Berechtigungsentscheidung von einem serverseitigen Webhook kommt und nicht vom Client. Veröffentlicht habe ich das Ganze auf Hetzner mit Docker und Caddy, samt nächtlichen Backups und Monitoring.",
+    sonuc:
+      "Die App ist in 177 Ländern produktiv bei Google Play verfügbar. Die Abonnementkette ist durchgängig verifiziert — vom Store über den Webhook bis in die Datenbank. Gezielte Optimierung senkte die Infrastrukturkosten von mehreren hundert Lira monatlich auf fünfunddreißig und machte sie unabhängig von der Nutzerzahl planbar.",
+    neden: [
+      {
+        baslik: "Warum laufen Ortsdaten über einen Backend-Proxy?",
+        aciklama:
+          "Zwei Gründe. Sicherheit: Ein im Mobile-Bundle ausgelieferter API-Schlüssel lässt sich extrahieren, und jemand anderes treibt die Rechnung hoch. Kosten: Google Places dominierte die Juli-Rechnung mit 922 Lira. Nachdem ich die Bilder auf den eigenen Server verlagert und die Aufrufe über den Proxy zentralisiert hatte, lag die August-Rechnung bei 34,77 Lira — die Places-Position fehlte darin vollständig.",
+      },
+      {
+        baslik: "Warum Kaufprüfung per Webhook?",
+        aciklama:
+          "Dass ein Client dem Server sagt „ich habe gekauft\", ist das am leichtesten zu fälschende Signal überhaupt. Stattdessen habe ich den Webhook — vom Store über RevenueCat zum eigenen Server — zur einzigen Wahrheitsquelle gemacht. Das Telefon trifft die Berechtigungsentscheidung nie.",
+      },
+      {
+        baslik: "Warum ein monatliches statt lebenslanges Limit?",
+        aciklama:
+          "Im ersten Entwurf bekamen kostenlose Nutzer eine Handvoll Pläne auf Lebenszeit. Das Ergebnis war schlecht: Sie verbrauchten alles am ersten Tag, stießen an die Wand und löschten die App. Ein monatlich erneuertes Limit holte die Nutzer zurück, ohne den Kaufgrund für Premium zu schwächen.",
+      },
+      {
+        baslik: "Warum kein fertiges Analytics-SDK?",
+        aciklama:
+          "Firebase oder Ähnliches einzubinden dauert fünf Minuten, gibt aber Nutzerdaten an Dritte weiter und verkompliziert die Datenerklärung im Store. Stattdessen habe ich ein eigenes Ereignismodell und eigene Funnel-Endpunkte geschrieben. Die App enthält kein Werbenetzwerk und keinen Tracker.",
+      },
+      {
+        baslik: "Warum wird die Gerätekennung gehasht?",
+        aciklama:
+          "Die kostenlosen Kontingente mussten vor unbegrenzt angelegten Konten geschützt werden, doch eine roh gespeicherte Gerätekennung ist eine dauerhafte Tracking-ID. Ich hashe sie mit einem serverseitigen Geheimnis: Ich erkenne dasselbe Gerät wieder, halte aber nie etwas Umkehrbares.",
+      },
+    ],
+  },
+
   rhinoai: {
     ad: "RhinoAI",
     ozet:

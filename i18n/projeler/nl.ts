@@ -2,6 +2,54 @@ import type { KismiProjeMetinleri } from "./tipler";
 
 /* Henüz çevrilmemiş projeler Türkçe metne düşer. */
 export const projelerNl: KismiProjeMetinleri = {
+  aventra: {
+    ad: "Aventra — AI-reisplanner",
+    ozet:
+      "De gebruiker typt waar hij heen wil en krijgt binnen dertig seconden een dag-voor-dag reisschema: echte plekken, timing die rekening houdt met openingstijden, en een geschat budget. Een app in acht talen, sinds 6 september 2026 live in Google Play in 177 landen.",
+    vurgular: [
+      "Een commercieel product dat volledig zelf is gebouwd en zelf wordt gehost: mobiele app, API, database, beheerpaneel en marketingsite.",
+      "Planvorming op basis van Gemini; elke voorgestelde plek wordt geverifieerd tegen Google Places-data, en de API-sleutel bereikt dankzij een backend-proxy nooit de telefoon.",
+      "Abonnementsinfrastructuur voor twee stores via RevenueCat — aankopen worden geverifieerd door een server-webhook, nooit door de client.",
+      "Quotasysteem op basis van PlanLimit en UsageRecord, met een HMAC-gehashte apparaat-identificatie tegen misbruik met meerdere accounts; de ruwe identificatie wordt nooit opgeslagen.",
+      "Interface in acht talen, offline toegang tot reizen voor Premium, en eigen analytics zonder advertentienetwerk of tracker van derden.",
+      "Docker en Caddy op Hetzner, nachtelijke automatische back-ups, testsuites die 45/45 en 53/53 halen.",
+    ],
+    rol: "Volledige ontwikkeling, infrastructuur en storepublicatie",
+    problem:
+      "Een reis plannen is versnipperd werk. Wie een bestemming uitzoekt, springt tussen blogs, kaartapps, weersites en boekingspagina's — en houdt er alsnog geen samenhangend schema aan over. Bestaande AI-planners hebben een ander probleem: omdat ze niet gekoppeld zijn aan echte plaatsgegevens, stellen ze locaties voor die niet bestaan en negeren ze openingstijden en afstanden volledig. Het resultaat oogt goed op papier maar valt ter plekke uiteen.",
+    cozum:
+      "De mobiele kant heb ik gebouwd op React Native en Expo, de backend op NestJS, Prisma en PostgreSQL. Gemini genereert het plan, maar elke voorgestelde plek wordt geverifieerd tegen Google Places, dat ook coördinaten, openingstijden en afstanden levert — zo bestaat het plan uit echte, bereikbare locaties. Vallen de reisdata over vandaag, dan schakelt het startscherm volledig over naar \"reismodus\" en zet het het dagplan, plekken in de buurt en uitgavensnelkoppelingen op de voorgrond. De abonnementen heb ik met RevenueCat voor beide stores opgezet, waarbij de rechtenbeslissing van een server-webhook komt en niet van de client. Tot slot heb ik alles op Hetzner uitgerold met Docker en Caddy, inclusief nachtelijke back-ups en monitoring.",
+    sonuc:
+      "De app draait in productie in Google Play in 177 landen. De abonnementsketen is volledig geverifieerd — van store via webhook tot database. Doelgerichte optimalisatie bracht de infrastructuurkosten terug van enkele honderden lira per maand naar vijfendertig, en maakte ze voorspelbaar ongeacht het aantal gebruikers.",
+    neden: [
+      {
+        baslik: "Waarom lopen plaatsgegevens via een backend-proxy?",
+        aciklama:
+          "Twee redenen. Veiligheid: een API-sleutel die in een mobiele bundel wordt meegeleverd, is eruit te halen, en iemand anders jaagt jouw rekening op. Kosten: Google Places domineerde de julirekening met 922 lira. Nadat ik de afbeeldingen naar mijn eigen server had verplaatst en de aanroepen via de proxy centraliseerde, kwam augustus uit op 34,77 lira — de Places-post ontbrak volledig.",
+      },
+      {
+        baslik: "Waarom aankopen verifiëren via een webhook?",
+        aciklama:
+          "Een client die tegen de server zegt \"ik heb gekocht\" is het makkelijkst te vervalsen signaal dat er is. In plaats daarvan heb ik de webhook — van store via RevenueCat naar mijn eigen server — tot enige bron van waarheid gemaakt. De telefoon neemt de rechtenbeslissing nooit.",
+      },
+      {
+        baslik: "Waarom een maandelijkse in plaats van levenslange limiet?",
+        aciklama:
+          "In het eerste ontwerp kregen gratis gebruikers een handvol plannen voor het leven. De uitkomst was slecht: ze verbruikten alles op dag één, liepen tegen een muur en verwijderden de app. Een maandelijks vernieuwende limiet bracht gebruikers terug zonder de reden om Premium te kopen te verzwakken.",
+      },
+      {
+        baslik: "Waarom geen kant-en-klare analytics-SDK?",
+        aciklama:
+          "Firebase of iets vergelijkbaars toevoegen kost vijf minuten, maar geeft gebruikersdata aan een derde partij en compliceert de gegevensverklaring in de store. In plaats daarvan schreef ik mijn eigen gebeurtenismodel en funnel-endpoints. De app bevat geen advertentienetwerk en geen tracker.",
+      },
+      {
+        baslik: "Waarom wordt de apparaat-identificatie gehasht?",
+        aciklama:
+          "De gratis tegoeden moesten beschermd worden tegen gebruikers die onbeperkt accounts aanmaken, maar een ruw opgeslagen apparaat-identificatie is een permanente tracking-ID. Ik hash hem met een server-side geheim: ik herken hetzelfde apparaat, zonder ooit iets omkeerbaars in handen te hebben.",
+      },
+    ],
+  },
+
   rhinoai: {
     ad: "RhinoAI",
     ozet:
