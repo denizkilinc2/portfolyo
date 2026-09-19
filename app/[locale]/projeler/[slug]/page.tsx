@@ -86,6 +86,13 @@ export default async function ProjeDetay({
     { id: "sonuc", etiket: s.detay.sonuc, baslik: s.detay.sonucBaslik, metin: m.sonuc },
   ].filter((a) => a.metin);
 
+  /* Mağaza bağlantısı varsa o birincil buton olur,
+     canlı demo ince çerçeveye düşer. */
+  const dolu =
+    "group flex h-12 items-center gap-2.5 rounded-full bg-accent px-7 font-medium text-ink transition-all duration-300 hover:bg-accent-soft hover:shadow-[0_0_40px_-10px_var(--accent)]";
+  const cerceveli =
+    "group flex h-12 items-center gap-2.5 rounded-full border border-line px-7 text-cream transition-all duration-300 hover:border-accent hover:text-accent";
+
   /* Proje sayfası için CreativeWork şeması —
      her projeyi ayrı bir eser olarak tanıtır. */
   const projeSemasi = {
@@ -103,7 +110,9 @@ export default async function ProjeDetay({
     },
     keywords: proje.stack.join(", "),
     ...(proje.yil ? { dateCreated: proje.yil } : {}),
-    ...(proje.demo ? { sameAs: proje.demo } : {}),
+    ...(proje.play || proje.demo
+      ? { sameAs: [proje.play, proje.demo].filter(Boolean) }
+      : {}),
     ...(proje.github ? { codeRepository: proje.github } : {}),
   };
 
@@ -132,9 +141,14 @@ export default async function ProjeDetay({
           <div className="flex items-center gap-2.5">
             <LangSwitcher dil={locale} etiket={s.nav.dilSec} />
             <ThemeToggle />
-            <Link href={`/${locale}`} className="flex items-center gap-2.5" aria-label={s.nav.anaSayfa}>
-              <span className="flex h-8 w-8 items-center justify-center rounded-md border border-line bg-ink-card font-mono text-xs font-bold text-accent">
-                DK
+            <Link href={`/${locale}`} className="group flex items-center gap-2.5" aria-label={s.nav.anaSayfa}>
+              <span className="rozet-kutu flex h-8 w-8 items-center justify-center rounded-md border border-line bg-ink-card transition-colors group-hover:border-accent">
+                <span className="rozet font-mono text-xs font-bold" aria-hidden="true">
+                  <span className="rozet-taban">DK</span>
+                  <span className="rozet-akim">DK</span>
+                  <span className="rozet-carpma">DK</span>
+                </span>
+                <span className="sr-only">DK</span>
               </span>
             </Link>
           </div>
@@ -161,12 +175,27 @@ export default async function ProjeDetay({
           </Reveal>
 
           {/* ---------- Bağlantı butonları ---------- */}
-          {(proje.github || proje.demo) && (
+          {/* Sıra: mağaza (en güçlü) → canlı demo → kaynak kod */}
+          {(proje.play || proje.github || proje.demo) && (
             <Reveal delay={60}>
               <div className="mt-10 flex flex-wrap gap-3">
+                {proje.play && (
+                  <Magnetic>
+                    <a href={proje.play} target="_blank" rel="noopener noreferrer" className={dolu}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.802 8.99l-2.303 2.303-8.635-8.635z" />
+                      </svg>
+                      Google Play
+                      <svg width="13" height="13" viewBox="0 0 12 12" fill="none" className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">
+                        <path d="M3 9L9 3M9 3H4M9 3v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </a>
+                  </Magnetic>
+                )}
+
                 {proje.demo && (
                   <Magnetic>
-                    <a href={proje.demo} target="_blank" rel="noopener noreferrer" className="group flex h-12 items-center gap-2.5 rounded-full bg-accent px-7 font-medium text-ink transition-all duration-300 hover:bg-accent-soft hover:shadow-[0_0_40px_-10px_var(--accent)]">
+                    <a href={proje.demo} target="_blank" rel="noopener noreferrer" className={proje.play ? cerceveli : dolu}>
                       {s.detay.canliDemo}
                       <svg width="13" height="13" viewBox="0 0 12 12" fill="none" className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">
                         <path d="M3 9L9 3M9 3H4M9 3v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -177,7 +206,7 @@ export default async function ProjeDetay({
 
                 {proje.github && (
                   <Magnetic>
-                    <a href={proje.github} target="_blank" rel="noopener noreferrer" className="group flex h-12 items-center gap-2.5 rounded-full border border-line px-7 text-cream transition-all duration-300 hover:border-accent hover:text-accent">
+                    <a href={proje.github} target="_blank" rel="noopener noreferrer" className={cerceveli}>
                       {s.detay.kaynakKod}
                       <svg width="13" height="13" viewBox="0 0 12 12" fill="none" className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">
                         <path d="M3 9L9 3M9 3H4M9 3v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

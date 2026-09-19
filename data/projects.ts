@@ -27,6 +27,8 @@ export type Project = {
   yil?: string;
   github?: string;
   demo?: string;
+  /* Google Play mağaza bağlantısı — yayında olan mobil uygulamalar için */
+  play?: string;
   gorseller?: Gorsel[];
 };
 
@@ -56,6 +58,7 @@ export const projects: Project[] = [
     ],
     yil: "2026",
     demo: "https://useaventra.com/",
+    play: "https://play.google.com/store/apps/details?id=com.aventraapp.aventra",
   },
   {
     no: "02",

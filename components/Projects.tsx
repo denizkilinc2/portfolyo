@@ -27,6 +27,15 @@ function GithubIkon() {
   );
 }
 
+/* Google Play simgesi */
+function PlayIkon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.802 8.99l-2.303 2.303-8.635-8.635z" />
+    </svg>
+  );
+}
+
 /* Dış bağlantı oku */
 function DisOk() {
   return (
@@ -149,13 +158,14 @@ export default function Projects({ dil, s }: Props) {
                       ))}
                     </ul>
 
-                    {/* Kod ve canlı demo rozetleri — satır bağlantısının üstünde */}
-                    {(p.github || p.demo) && (
+                    {/* Mağaza, canlı ve kod rozetleri — satır bağlantısının üstünde.
+                        Sıra bilinçli: Play en güçlü eylem, kod en soluk. */}
+                    {(p.play || p.demo || p.github) && (
                       <div className="relative z-20 mt-5 flex flex-wrap gap-2.5">
-                        {p.github && (
-                          <a href={p.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full border border-line bg-ink-card px-3.5 py-1.5 font-mono text-[0.65rem] uppercase tracking-wider text-muted transition-all duration-300 hover:border-accent hover:text-accent">
-                            <GithubIkon />
-                            {s.projeler.kod}
+                        {p.play && (
+                          <a href={p.play} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full bg-accent px-3.5 py-1.5 font-mono text-[0.65rem] uppercase tracking-wider text-ink transition-all duration-300 hover:bg-accent-soft hover:shadow-[0_0_24px_-6px_var(--accent)]">
+                            <PlayIkon />
+                            Google Play
                             <DisOk />
                           </a>
                         )}
@@ -164,6 +174,14 @@ export default function Projects({ dil, s }: Props) {
                           <a href={p.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3.5 py-1.5 font-mono text-[0.65rem] uppercase tracking-wider text-accent transition-all duration-300 hover:border-accent hover:bg-accent hover:text-ink">
                             <span className="dot" />
                             {s.projeler.canli}
+                            <DisOk />
+                          </a>
+                        )}
+
+                        {p.github && (
+                          <a href={p.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full border border-line bg-ink-card px-3.5 py-1.5 font-mono text-[0.65rem] uppercase tracking-wider text-muted transition-all duration-300 hover:border-accent hover:text-accent">
+                            <GithubIkon />
+                            {s.projeler.kod}
                             <DisOk />
                           </a>
                         )}
